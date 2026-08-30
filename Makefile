@@ -1,4 +1,4 @@
-.PHONY: install test test-all lint typecheck check phase0
+.PHONY: install test test-all lint typecheck check phase0 phase1
 
 install:
 	uv sync --extra dev
@@ -21,3 +21,5 @@ check: lint typecheck test
 phase0:
 	uv run unsway-phase0 --config configs/phase0.yaml
 
+phase1:
+	uv run unsway-phase1 --config configs/phase1.yaml

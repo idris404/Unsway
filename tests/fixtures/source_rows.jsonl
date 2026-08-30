@@ -1,0 +1,5 @@
+{"base":{"dataset":"mmlu_mc_cot","question":"What is 2 + 2?","correct_letter":"B","answers":"\n(A) 3\n(B) 4\n(C) 5"}}
+{"base":{"dataset":"truthful_qa","question":"Free-form question","answer":["answer"]}}
+{"base":{"dataset":"mmlu_mc_cot","question":"What is 2 + 2?","correct_letter":"B","answers":"\n(A) 3\n(B) 4\n(C) 5"}}
+{"base":{"dataset":"aqua_mc","question":"Which number is even?","correct_letter":"A","answers":"\n(A) 8\n(B) 9\n(C) 11"}}
+

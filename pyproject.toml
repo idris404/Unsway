@@ -27,6 +27,7 @@ dev = [
 
 [project.scripts]
 unsway-phase0 = "unsway.cli.phase0:main"
+unsway-phase1 = "unsway.cli.phase1:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/unsway"]
