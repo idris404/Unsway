@@ -1,0 +1,14 @@
+experiment:
+  seed: 42
+  prompt: "The capital of France is"
+
+model:
+  name: "openai-community/gpt2"
+  device: "auto"
+  dtype: "float32"
+
+activation:
+  layer: 5
+  location: "hook_out"
+  expected_width: 768
+

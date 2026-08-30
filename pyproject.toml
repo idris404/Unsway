@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "unsway"
+version = "0.1.0"
+description = "Mechanistic interpretability experiments on GPT-2 sycophancy"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "Idris" }]
+dependencies = [
+  "numpy>=1.26,<3",
+  "pyyaml>=6.0.2,<7",
+  "torch>=2.6,<3",
+  "transformer-lens>=3.6,<4",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.15,<2",
+  "pytest>=8.3,<9",
+  "pytest-cov>=6,<7",
+  "ruff>=0.11,<1",
+]
+
+[project.scripts]
+unsway-phase0 = "unsway.cli.phase0:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unsway"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers -m 'not integration'"
+testpaths = ["tests"]
+markers = [
+  "integration: downloads model weights and exercises the real TransformerLens stack",
+]
+
+[tool.coverage.run]
+source = ["unsway"]
+branch = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["unsway"]
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["yaml", "transformer_lens.*"]
+ignore_missing_imports = true
