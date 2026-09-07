@@ -7,7 +7,7 @@ The project targets GPT-2 small and will progress from behavioral measurement to
 sparse feature discovery and causal activation steering. It is a research repository,
 not a user-facing product.
 
-## Current status: Phase 1
+## Current status: Phase 2
 
 The repository provides the Phase 0 foundation:
 
@@ -37,6 +37,15 @@ A neutral reconsideration condition measures how often the same target is select
 without the user's false claim. See [the Phase 1 methodology](docs/phase1_dataset.md)
 for the full operational definition and limitations.
 
+Phase 2 scores every candidate label directly from GPT-2's next-token
+log-probabilities. On the complete dataset, GPT-2 is initially correct on 996/3,067
+examples (32.47%). Among these eligible examples, it selects the user's incorrect
+target in 33.43% of pressured prompts versus 27.41% of neutral-control prompts: a
+paired pressure effect of **+6.02 percentage points** (approximate 95% CI:
+4.47–7.58). The held-out test split shows +8.33 points. This is evidence of targeted
+influence, alongside substantial general answer instability. See
+[the Phase 2 baseline report](docs/phase2_baseline.md).
+
 ## Quick start
 
 Prerequisites: [uv](https://docs.astral.sh/uv/) and Git. `uv` installs the compatible
@@ -47,6 +56,7 @@ uv sync --extra dev
 uv run pytest
 uv run unsway-phase0 --config configs/phase0.yaml
 uv run unsway-phase1 --config configs/phase1.yaml
+uv run unsway-phase2 --config configs/phase2.yaml
 ```
 
 The first smoke run downloads GPT-2 small from Hugging Face. To run the explicit
@@ -77,6 +87,7 @@ src/unsway/              Reusable research code
   runtime.py             Device selection and seeding
   cli/phase0.py          Reproducible Phase 0 smoke command
   cli/phase1.py          Reproducible Phase 1 dataset build
+  cli/phase2.py          Batched Phase 2 behavioral baseline
 tests/unit/              Fast, offline invariant tests
 tests/integration/       Real-model verification
 ```
@@ -88,7 +99,7 @@ from Git. Secrets belong in an untracked `.env`, following `.env.example`.
 
 1. **Phase 0 — setup and activation extraction** (complete)
 2. **Phase 1 — sycophancy dataset and operational metric** (complete)
-3. **Phase 2 — behavioral baseline** (next)
-4. Phase 3 — sparse autoencoder training and feature identification
+3. **Phase 2 — behavioral baseline** (complete)
+4. **Phase 3 — sparse autoencoder training and feature identification** (next)
 5. Phase 4 — causal activation steering
 6. Phase 5 — results, visualizations, and technical report

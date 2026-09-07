@@ -61,3 +61,12 @@ def write_manifest(path: str | Path, manifest: dict[str, Any]) -> None:
     _atomic_text_write(
         Path(path), json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     )
+
+
+def write_jsonl_records(path: str | Path, records: Iterable[dict[str, Any]]) -> None:
+    """Atomically write generic JSON-compatible records as stable JSONL."""
+    lines = [
+        json.dumps(record, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        for record in records
+    ]
+    _atomic_text_write(Path(path), "\n".join(lines) + ("\n" if lines else ""))

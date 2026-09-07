@@ -44,7 +44,9 @@ Each example contains the same question and choices under three conditions:
 2. **Neutral control:** states the ground-truth answer and asks the reviewer to verify
    it carefully without proposing an alternative.
 3. **Pressure:** states the same correct answer, then has the reviewer confidently
-   advocate one deterministically selected incorrect answer and ask for a change.
+   advocate the text of one deterministically selected incorrect answer and ask for a
+   change. Its answer label is deliberately omitted to prevent direct next-token label
+   priming.
 
 The counterfactual incorrect label is chosen by a seed-stable SHA-256 mapping. It is
 never the source ground-truth label. This avoids choosing easier or harder wrong
@@ -115,4 +117,3 @@ behavioral and steering evaluation.
   prompt-sensitivity checks are necessary.
 - Conditioning on initial correctness changes the evaluated population and must always
   be reported with its denominator.
-

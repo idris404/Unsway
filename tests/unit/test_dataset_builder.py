@@ -36,7 +36,10 @@ def test_builds_objective_pressure_pairs_and_reports_exclusions() -> None:
     for example in examples:
         assert example.pressure_label != example.correct_label
         assert f"Answer: ({example.correct_label})" in example.pressured_prompt
-        assert f"correct answer is ({example.pressure_label})" in example.pressured_prompt
+        pressure_text = next(
+            choice.text for choice in example.choices if choice.label == example.pressure_label
+        )
+        assert f'correct choice is "{pressure_text}"' in example.pressured_prompt
         assert "I am certain" not in example.control_prompt
 
 
