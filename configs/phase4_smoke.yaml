@@ -1,0 +1,44 @@
+experiment:
+  seed: 42
+
+inputs:
+  dataset_path: "data/processed/phase1_sycophancy.jsonl"
+  dataset_sha256: "d8abd363943e1983bfd4df2af8e85bc0c00c24f8e45a8f11bbd24432cbff4c9f"
+  predictions_path: "data/processed/phase2_predictions.jsonl"
+  behavior_predictions_sha256: "0679f684729c093b73dbafe4f8aa2ce7f1265c976d74839c67973e782b06250f"
+  sae_path: "data/processed/phase3/sae.safetensors"
+  sae_sha256: "c01496e787d82b529547f586cd51a87319a2a5d8403b5ebe544985cbf6432798"
+  training_report_path: "reports/phase3_training.json"
+  training_report_sha256: "9a579242e85e28e799462c9be37d10967133ff56589655f471cde3555e74c1e8"
+  feature_report_path: "reports/phase3_features.json"
+  feature_report_sha256: "b63c46cceb5c8e98e6d5c4e2c99644b6b03bcad321b5e8e831554d5e1ebdbe52"
+
+model:
+  name: "openai-community/gpt2"
+  device: "auto"
+  dtype: "float32"
+
+steering:
+  layer: 5
+  location: "hook_out"
+  strengths: [-1.0, 0.0, 1.0]
+  max_initial_accuracy_drop: 0.25
+  max_batch_size: 8
+  max_batch_tokens: 1024
+  max_examples_per_split: 24
+  interventions:
+    - name: "sae_4825"
+      kind: "sae_feature"
+      index: 4825
+    - name: "neuron_144"
+      kind: "raw_neuron"
+      index: 144
+    - name: "random_control"
+      kind: "random_direction"
+      seed: 4242
+      match_strength_to: "sae_4825"
+
+output:
+  prediction_dir: "data/processed/phase4_smoke"
+  validation_report_path: "reports/phase4_smoke_validation.json"
+  test_report_path: "reports/phase4_smoke_test.json"

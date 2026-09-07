@@ -7,7 +7,7 @@ The project targets GPT-2 small and will progress from behavioral measurement to
 sparse feature discovery and causal activation steering. It is a research repository,
 not a user-facing product.
 
-## Current status: Phase 3 complete
+## Current status: Phase 4 implementation
 
 The repository provides the Phase 0 foundation:
 
@@ -61,6 +61,14 @@ The full CUDA run is orchestrated by the lightweight
 [Phase 3 Colab notebook](notebooks/phase3_colab.ipynb), which calls the repository CLI
 and backs up expensive artifacts to Google Drive.
 
+Phase 4 adds leakage-safe causal steering at the same layer and decision position. It
+sweeps signed intervention strengths on validation, freezes a dose under an accuracy
+guardrail, and evaluates that dose once on test. The primary SAE direction (feature
+4825) is compared with raw neuron 144 and a matched-strength random control. See the
+[Phase 4 protocol](docs/phase4_steering.md).
+The corresponding [Phase 4 Colab notebook](notebooks/phase4_colab.ipynb) restores the
+SAE from Drive, runs validation selection, and then performs the frozen held-out test.
+
 ## Quick start
 
 Prerequisites: [uv](https://docs.astral.sh/uv/) and Git. `uv` installs the compatible
@@ -73,6 +81,7 @@ uv run unsway-phase0 --config configs/phase0.yaml
 uv run unsway-phase1 --config configs/phase1.yaml
 uv run unsway-phase2 --config configs/phase2.yaml
 uv run unsway-phase3 --config configs/phase3_smoke.yaml --stage all
+uv run unsway-phase4 --config configs/phase4_smoke.yaml --stage all
 ```
 
 The first smoke run downloads GPT-2 small from Hugging Face. To run the explicit
@@ -100,6 +109,7 @@ src/unsway/              Reusable research code
   data/                   Dataset schema, acquisition, build, and I/O
   evaluation/             Behavioral metric definitions
   features/               Activation corpus, Top-K SAE, feature analysis
+  steering/               Causal directions, dose selection, held-out evaluation
   model.py               TransformerLens model loading
   runtime.py             Device selection and seeding
   cli/phase0.py          Reproducible Phase 0 smoke command

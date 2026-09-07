@@ -31,6 +31,7 @@ unsway-phase0 = "unsway.cli.phase0:main"
 unsway-phase1 = "unsway.cli.phase1:main"
 unsway-phase2 = "unsway.cli.phase2:main"
 unsway-phase3 = "unsway.cli.phase3:main"
+unsway-phase4 = "unsway.cli.phase4:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/unsway"]
