@@ -7,7 +7,7 @@ The project targets GPT-2 small and will progress from behavioral measurement to
 sparse feature discovery and causal activation steering. It is a research repository,
 not a user-facing product.
 
-## Current status: Phase 2
+## Current status: Phase 3 implementation
 
 The repository provides the Phase 0 foundation:
 
@@ -46,6 +46,14 @@ paired pressure effect of **+6.02 percentage points** (approximate 95% CI:
 influence, alongside substantial general answer instability. See
 [the Phase 2 baseline report](docs/phase2_baseline.md).
 
+Phase 3 now provides a cloud-portable activation corpus and sparse-feature pipeline:
+checksum-verified `safetensors` shards, a unit-normalized Top-K sparse autoencoder,
+train-only feature ranking, validation-only confirmation, dead-feature diagnostics,
+and top-activating example retrieval. The complete pipeline passes locally on a small
+real-model smoke run. The full scientific SAE training remains intentionally assigned
+to a CUDA cloud run; smoke metrics are not reported as findings. See
+[the Phase 3 methodology](docs/phase3_sae.md).
+
 ## Quick start
 
 Prerequisites: [uv](https://docs.astral.sh/uv/) and Git. `uv` installs the compatible
@@ -57,6 +65,7 @@ uv run pytest
 uv run unsway-phase0 --config configs/phase0.yaml
 uv run unsway-phase1 --config configs/phase1.yaml
 uv run unsway-phase2 --config configs/phase2.yaml
+uv run unsway-phase3 --config configs/phase3_smoke.yaml --stage all
 ```
 
 The first smoke run downloads GPT-2 small from Hugging Face. To run the explicit
@@ -83,11 +92,13 @@ src/unsway/              Reusable research code
   config.py              Typed YAML configuration
   data/                   Dataset schema, acquisition, build, and I/O
   evaluation/             Behavioral metric definitions
+  features/               Activation corpus, Top-K SAE, feature analysis
   model.py               TransformerLens model loading
   runtime.py             Device selection and seeding
   cli/phase0.py          Reproducible Phase 0 smoke command
   cli/phase1.py          Reproducible Phase 1 dataset build
   cli/phase2.py          Batched Phase 2 behavioral baseline
+  cli/phase3.py          Phase 3 extract/train/analyze pipeline
 tests/unit/              Fast, offline invariant tests
 tests/integration/       Real-model verification
 ```
@@ -100,6 +111,6 @@ from Git. Secrets belong in an untracked `.env`, following `.env.example`.
 1. **Phase 0 — setup and activation extraction** (complete)
 2. **Phase 1 — sycophancy dataset and operational metric** (complete)
 3. **Phase 2 — behavioral baseline** (complete)
-4. **Phase 3 — sparse autoencoder training and feature identification** (next)
+4. **Phase 3 — sparse autoencoder training and feature identification** (pipeline ready; full CUDA run pending)
 5. Phase 4 — causal activation steering
 6. Phase 5 — results, visualizations, and technical report

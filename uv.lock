@@ -1466,6 +1466,7 @@ source = { editable = "." }
 dependencies = [
     { name = "numpy" },
     { name = "pyyaml" },
+    { name = "safetensors" },
     { name = "torch" },
     { name = "transformer-lens" },
 ]
@@ -1486,6 +1487,7 @@ requires-dist = [
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=6,<7" },
     { name = "pyyaml", specifier = ">=6.0.2,<7" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.11,<1" },
+    { name = "safetensors", specifier = ">=0.6,<1" },
     { name = "torch", specifier = ">=2.6,<3" },
     { name = "transformer-lens", specifier = ">=3.6,<4" },
 ]

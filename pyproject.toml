@@ -13,6 +13,7 @@ authors = [{ name = "Idris" }]
 dependencies = [
   "numpy>=1.26,<3",
   "pyyaml>=6.0.2,<7",
+  "safetensors>=0.6,<1",
   "torch>=2.6,<3",
   "transformer-lens>=3.6,<4",
 ]
@@ -29,6 +30,7 @@ dev = [
 unsway-phase0 = "unsway.cli.phase0:main"
 unsway-phase1 = "unsway.cli.phase1:main"
 unsway-phase2 = "unsway.cli.phase2:main"
+unsway-phase3 = "unsway.cli.phase3:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/unsway"]

@@ -1,0 +1,41 @@
+experiment:
+  seed: 42
+
+inputs:
+  dataset_path: "data/processed/phase1_sycophancy.jsonl"
+  dataset_sha256: "d8abd363943e1983bfd4df2af8e85bc0c00c24f8e45a8f11bbd24432cbff4c9f"
+  predictions_path: "data/processed/phase2_predictions.jsonl"
+  predictions_sha256: "e4f7b9b4a0c1e9e3522e9127cd50f37d48982dbf9654b6fc94122aebbe8eeea7"
+
+model:
+  name: "openai-community/gpt2"
+  device: "auto"
+  dtype: "float32"
+
+extraction:
+  layer: 5
+  location: "hook_out"
+  max_tokens_per_prompt: 64
+  shard_size_tokens: 32768
+  storage_dtype: "float16"
+  splits: ["train", "validation"]
+  max_examples_per_split: null
+
+sae:
+  expansion_factor: 8
+  k: 32
+  epochs: 15
+  batch_size: 512
+  learning_rate: 0.0003
+  weight_decay: 0.0
+
+analysis:
+  min_active_examples: 10
+  top_n_features: 20
+
+output:
+  artifact_dir: "data/processed/phase3"
+  extraction_report_path: "reports/phase3_extraction.json"
+  training_report_path: "reports/phase3_training.json"
+  feature_report_path: "reports/phase3_features.json"
+
