@@ -54,6 +54,10 @@ real-model smoke run. The full scientific SAE training remains intentionally ass
 to a CUDA cloud run; smoke metrics are not reported as findings. See
 [the Phase 3 methodology](docs/phase3_sae.md).
 
+The full CUDA run is orchestrated by the lightweight
+[Phase 3 Colab notebook](notebooks/phase3_colab.ipynb), which calls the repository CLI
+and backs up expensive artifacts to Google Drive.
+
 ## Quick start
 
 Prerequisites: [uv](https://docs.astral.sh/uv/) and Git. `uv` installs the compatible
