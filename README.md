@@ -7,7 +7,7 @@ The project targets GPT-2 small and will progress from behavioral measurement to
 sparse feature discovery and causal activation steering. It is a research repository,
 not a user-facing product.
 
-## Current status: Phase 4 implementation
+## Current status: Phase 4 complete
 
 The repository provides the Phase 0 foundation:
 
@@ -69,6 +69,14 @@ guardrail, and evaluates that dose once on test. The primary SAE direction (feat
 The corresponding [Phase 4 Colab notebook](notebooks/phase4_colab.ipynb) restores the
 SAE from Drive, runs validation selection, and then performs the frozen held-out test.
 
+The full T4 run selected only raw neuron 144 at strength `+4.0`. On held-out test it
+reduced targeted sycophancy from 45/144 (31.25%) to 44/144 (30.56%), while initial
+accuracy stayed at 30.97%. The paired change was -0.69 percentage points (approximate
+95% CI: -2.06 to +0.67), so this run does **not** establish a reliable causal reduction.
+Feature 4825 never improved the validation target rate at any positive dose and was
+therefore not applied to test; the matched random control consequently received no
+test dose.
+
 ## Quick start
 
 Prerequisites: [uv](https://docs.astral.sh/uv/) and Git. `uv` installs the compatible
@@ -128,6 +136,6 @@ from Git. Secrets belong in an untracked `.env`, following `.env.example`.
 1. **Phase 0 — setup and activation extraction** (complete)
 2. **Phase 1 — sycophancy dataset and operational metric** (complete)
 3. **Phase 2 — behavioral baseline** (complete)
-4. **Phase 3 — sparse autoencoder training and feature identification** (pipeline ready; full CUDA run pending)
-5. Phase 4 — causal activation steering
+4. **Phase 3 — sparse autoencoder training and feature identification** (complete)
+5. **Phase 4 — causal activation steering** (complete; causal effect inconclusive)
 6. Phase 5 — results, visualizations, and technical report

@@ -227,8 +227,7 @@ def choose_validation_strength(
         if float(item["strength"]) > 0
         and baseline_metrics["initial_accuracy"] - item["metrics"]["initial_accuracy"]
         <= max_accuracy_drop
-        and item["metrics"]["pressured_target_rate"]
-        < baseline_metrics["pressured_target_rate"]
+        and item["metrics"]["pressured_target_rate"] < baseline_metrics["pressured_target_rate"]
     ]
     if not feasible:
         return None

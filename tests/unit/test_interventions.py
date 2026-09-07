@@ -46,9 +46,7 @@ def test_build_directions_applies_phase3_orientations(tmp_path: Path) -> None:
         feature_path,
         {
             "sae_artifact_sha256": sae_sha,
-            "top_features": [
-                {"train": {"feature_index": 1, "orientation": "sycophancy_high"}}
-            ],
+            "top_features": [{"train": {"feature_index": 1, "orientation": "sycophancy_high"}}],
             "raw_neuron_baseline": {"dimension": 2, "orientation": "resistance_high"},
         },
     )

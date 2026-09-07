@@ -146,13 +146,9 @@ def load_phase4_config(path: str | Path) -> Phase4Config:
             sae_path=Path(str(inputs["sae_path"])),
             sae_sha256=_checksum(inputs["sae_sha256"], "SAE"),
             training_report_path=Path(str(inputs["training_report_path"])),
-            training_report_sha256=_checksum(
-                inputs["training_report_sha256"], "Training report"
-            ),
+            training_report_sha256=_checksum(inputs["training_report_sha256"], "Training report"),
             feature_report_path=Path(str(inputs["feature_report_path"])),
-            feature_report_sha256=_checksum(
-                inputs["feature_report_sha256"], "Feature report"
-            ),
+            feature_report_sha256=_checksum(inputs["feature_report_sha256"], "Feature report"),
         ),
         model=ModelConfig(
             name=str(model["name"]),
