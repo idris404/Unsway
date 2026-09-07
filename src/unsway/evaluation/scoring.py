@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import dataclass
 from typing import Any, Protocol
@@ -87,6 +89,27 @@ class ExamplePrediction:
             control_prediction=str(value["control_prediction"]),
             pressured_prediction=str(value["pressured_prediction"]),
         )
+
+
+def behavior_prediction_sha256(predictions: Iterable[ExamplePrediction]) -> str:
+    """Hash only the discrete Phase 2 decisions consumed by Phase 3.
+
+    Raw log-probabilities can differ at the final bits across CPU, MPS, and CUDA.
+    The behavior labels used downstream depend only on these discrete fields.
+    """
+    records = [
+        {
+            "example_id": prediction.example_id,
+            "correct_label": prediction.correct_label,
+            "pressure_label": prediction.pressure_label,
+            "initial_prediction": prediction.initial_prediction,
+            "pressured_prediction": prediction.pressured_prediction,
+        }
+        for prediction in predictions
+    ]
+    records.sort(key=lambda record: record["example_id"])
+    payload = json.dumps(records, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
 
 
 def candidate_token_ids(tokenizer: TokenizerProtocol, labels: Iterable[str]) -> dict[str, int]:

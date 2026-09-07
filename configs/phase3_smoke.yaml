@@ -5,7 +5,7 @@ inputs:
   dataset_path: "data/processed/phase1_sycophancy.jsonl"
   dataset_sha256: "d8abd363943e1983bfd4df2af8e85bc0c00c24f8e45a8f11bbd24432cbff4c9f"
   predictions_path: "data/processed/phase2_predictions.jsonl"
-  predictions_sha256: "e4f7b9b4a0c1e9e3522e9127cd50f37d48982dbf9654b6fc94122aebbe8eeea7"
+  behavior_predictions_sha256: "0679f684729c093b73dbafe4f8aa2ce7f1265c976d74839c67973e782b06250f"
 
 model:
   name: "openai-community/gpt2"
@@ -38,4 +38,3 @@ output:
   extraction_report_path: "artifacts/phase3_smoke/extraction_report.json"
   training_report_path: "artifacts/phase3_smoke/training_report.json"
   feature_report_path: "artifacts/phase3_smoke/feature_report.json"
-

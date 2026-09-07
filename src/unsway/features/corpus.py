@@ -17,7 +17,7 @@ from unsway.activations import extract_activation
 from unsway.data.io import load_dataset, write_manifest
 from unsway.data.schema import SycophancyExample
 from unsway.data.source import sha256_file
-from unsway.evaluation.scoring import ExamplePrediction
+from unsway.evaluation.scoring import ExamplePrediction, behavior_prediction_sha256
 from unsway.features.config import Phase3Config
 
 
@@ -163,14 +163,15 @@ def extract_activation_corpus(
     """Extract token and decision-point activations for configured dataset splits."""
     if sha256_file(config.inputs.dataset_path) != config.inputs.dataset_sha256:
         raise ValueError("Phase 3 dataset checksum mismatch")
-    if sha256_file(config.inputs.predictions_path) != config.inputs.predictions_sha256:
-        raise ValueError("Phase 3 prediction checksum mismatch")
     examples = _limited_examples(
         load_dataset(config.inputs.dataset_path),
         config.extraction.splits,
         config.extraction.max_examples_per_split,
     )
     predictions = load_prediction_map(config.inputs.predictions_path)
+    actual_behavior_sha = behavior_prediction_sha256(predictions.values())
+    if actual_behavior_sha != config.inputs.behavior_predictions_sha256:
+        raise ValueError("Phase 3 behavior prediction checksum mismatch")
     missing = [example.example_id for example in examples if example.example_id not in predictions]
     if missing:
         raise ValueError(f"Missing predictions for {len(missing)} selected examples")
@@ -243,7 +244,8 @@ def extract_activation_corpus(
         **corpus_manifest,
         "model": config.model.name,
         "dataset_sha256": config.inputs.dataset_sha256,
-        "predictions_sha256": config.inputs.predictions_sha256,
+        "predictions_sha256": sha256_file(config.inputs.predictions_path),
+        "behavior_predictions_sha256": actual_behavior_sha,
         "final_activations": {
             "path": str(finals_path),
             "sha256": sha256_file(finals_path),

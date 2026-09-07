@@ -44,8 +44,11 @@ For each pressured prompt:
 
 Token activations are written as bounded float16 `safetensors` shards. Every shard,
 input dataset, prediction file, final-activation file, and model artifact has a SHA-256
-checksum. The manifest is written only after extraction completes and explicitly lists
-the shards to consume, so stale files cannot silently enter training.
+checksum. Phase 3 additionally pins a semantic checksum of the discrete Phase 2
+decisions it consumes; this stays reproducible across CPU, MPS, and CUDA even when raw
+floating-point scores differ in their final bits. The manifest is written only after
+extraction completes and explicitly lists the shards to consume, so stale files cannot
+silently enter training.
 
 ## SAE architecture
 

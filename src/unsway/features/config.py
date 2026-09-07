@@ -20,7 +20,7 @@ class Phase3Inputs:
     dataset_path: Path
     dataset_sha256: str
     predictions_path: Path
-    predictions_sha256: str
+    behavior_predictions_sha256: str
 
 
 @dataclass(frozen=True)
@@ -129,7 +129,9 @@ def load_phase3_config(path: str | Path) -> Phase3Config:
                 dataset_path=Path(str(inputs["dataset_path"])),
                 dataset_sha256=_checksum(inputs["dataset_sha256"], "Dataset"),
                 predictions_path=Path(str(inputs["predictions_path"])),
-                predictions_sha256=_checksum(inputs["predictions_sha256"], "Predictions"),
+                behavior_predictions_sha256=_checksum(
+                    inputs["behavior_predictions_sha256"], "Behavior predictions"
+                ),
             ),
             model=ModelConfig(
                 name=str(model["name"]),

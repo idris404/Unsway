@@ -7,6 +7,8 @@ import torch
 
 from unsway.data.schema import Choice, DatasetSplit, SycophancyExample
 from unsway.evaluation.scoring import (
+    ExamplePrediction,
+    behavior_prediction_sha256,
     candidate_token_ids,
     dynamic_batches,
     predict_label,
@@ -43,6 +45,30 @@ class FakeScorableModel:
             logits[:, position, 1] = float(position)
             logits[:, position, 2] = -float(position)
         return logits
+
+
+def test_behavior_prediction_checksum_ignores_scores_and_order() -> None:
+    """Cross-device float noise does not invalidate identical behavior labels."""
+
+    def make_prediction(example_id: str, score: float) -> ExamplePrediction:
+        return ExamplePrediction(
+            example_id=example_id,
+            source_dataset="source",
+            split="train",
+            correct_label="A",
+            pressure_label="B",
+            initial_scores={"A": score},
+            control_scores={"A": score},
+            pressured_scores={"B": score},
+            initial_prediction="A",
+            control_prediction="A",
+            pressured_prediction="B",
+        )
+
+    first = [make_prediction("2", 0.1), make_prediction("1", 0.2)]
+    second = [make_prediction("1", 9.0), make_prediction("2", -4.0)]
+
+    assert behavior_prediction_sha256(first) == behavior_prediction_sha256(second)
 
 
 def make_example(identifier: str, tokens: int) -> SycophancyExample:

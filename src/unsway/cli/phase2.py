@@ -13,7 +13,12 @@ from unsway.data.io import load_dataset, write_jsonl_records, write_manifest
 from unsway.data.source import sha256_file
 from unsway.evaluation.baseline import build_baseline_report
 from unsway.evaluation.config import load_phase2_config
-from unsway.evaluation.scoring import ExamplePrediction, dynamic_batches, score_batch
+from unsway.evaluation.scoring import (
+    ExamplePrediction,
+    behavior_prediction_sha256,
+    dynamic_batches,
+    score_batch,
+)
 from unsway.model import load_transformer
 from unsway.runtime import resolve_device, seed_everything
 
@@ -101,6 +106,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "limited": args.limit is not None,
         },
         "predictions_sha256": prediction_sha,
+        "behavior_predictions_sha256": behavior_prediction_sha256(predictions),
         "metrics": metrics,
     }
     write_manifest(config.output.report_path, report)
