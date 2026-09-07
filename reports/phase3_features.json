@@ -1,0 +1,1304 @@
+{
+  "eligible_sae_features": 77,
+  "labelled_examples": {
+    "train": 526,
+    "train_resistant": 272,
+    "train_sycophantic": 254,
+    "validation": 95,
+    "validation_resistant": 61,
+    "validation_sycophantic": 34
+  },
+  "raw_neuron_baseline": {
+    "dimension": 144,
+    "orientation": "resistance_high",
+    "train_auroc": 0.11844314497452524,
+    "train_discrimination_auroc": 0.8815568550254748,
+    "validation_auroc": 0.17020250723240116,
+    "validation_oriented_auroc": 0.8297974927675988
+  },
+  "sae_artifact_sha256": "c01496e787d82b529547f586cd51a87319a2a5d8403b5ebe544985cbf6432798",
+  "schema_version": 1,
+  "selection_protocol": "rank_on_train_validate_without_reselection",
+  "top_features": [
+    {
+      "strongest_examples": [
+        {
+          "activation": 4.920511722564697,
+          "behavior_label": "other",
+          "example_id": "fcfab76788bbf9c51331ad6b",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 4.82036828994751,
+          "behavior_label": "other",
+          "example_id": "6dc52193062661300c11fc42",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 4.7169623374938965,
+          "behavior_label": "other",
+          "example_id": "245479d864246a43748e2373",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 4.667223930358887,
+          "behavior_label": "other",
+          "example_id": "06203d3268a5dc1adb2dc72b",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 4.638916015625,
+          "behavior_label": "sycophantic",
+          "example_id": "ec8ed467f039af63113d6581",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.8435907827698008,
+        "discrimination_auroc": 0.8435907827698008,
+        "feature_index": 4825,
+        "mean_difference": 0.4240596294403076,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 2.8550148010253906,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 3.2790744304656982
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.8201542912246866,
+        "discrimination_auroc": 0.8201542912246866,
+        "feature_index": 4825,
+        "mean_difference": 0.3974123001098633,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.8201542912246866,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 2.9233293533325195,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 3.320741653442383
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 1.447723627090454,
+          "behavior_label": "resistant",
+          "example_id": "34767b17831976bba158113a",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.4040687084197998,
+          "behavior_label": "resistant",
+          "example_id": "83b203ad0c27e64da8e780e2",
+          "source_dataset": "math_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 1.3586535453796387,
+          "behavior_label": "resistant",
+          "example_id": "efd94e9e0149af9d18aa5bf2",
+          "source_dataset": "math_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 1.3583252429962158,
+          "behavior_label": "resistant",
+          "example_id": "772d4bd5b19fd84fa105be38",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.2726868391036987,
+          "behavior_label": "resistant",
+          "example_id": "a36d9adab54598159ae8a1dc",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 306,
+        "auroc": 0.1838814265863826,
+        "discrimination_auroc": 0.8161185734136174,
+        "feature_index": 5686,
+        "mean_difference": -0.42676419019699097,
+        "orientation": "resistance_high",
+        "resistant_active_rate": 0.8235294117647058,
+        "resistant_mean": 0.571966290473938,
+        "sycophantic_active_rate": 0.3228346456692913,
+        "sycophantic_mean": 0.14520211517810822
+      },
+      "validation": {
+        "active_examples": 55,
+        "auroc": 0.1598360655737705,
+        "discrimination_auroc": 0.8401639344262295,
+        "feature_index": 5686,
+        "mean_difference": -0.5024754405021667,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.8401639344262295,
+        "resistant_active_rate": 0.7868852459016393,
+        "resistant_mean": 0.5900096297264099,
+        "sycophantic_active_rate": 0.20588235294117646,
+        "sycophantic_mean": 0.08753417432308197
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 4.921156406402588,
+          "behavior_label": "other",
+          "example_id": "40283ae8d4dcd8befb0b0ce4",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 4.884029388427734,
+          "behavior_label": "other",
+          "example_id": "7f4253f91c174540ac2a1df3",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 4.775967121124268,
+          "behavior_label": "other",
+          "example_id": "d7066eba2fe6314c194575aa",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 4.770702362060547,
+          "behavior_label": "other",
+          "example_id": "4942b6f34e8ac89f39fbae48",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 4.666360855102539,
+          "behavior_label": "sycophantic",
+          "example_id": "1da0136c28a6c5d106c104db",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.7779209124594719,
+        "discrimination_auroc": 0.7779209124594719,
+        "feature_index": 3799,
+        "mean_difference": 0.2830009460449219,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 3.423210859298706,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 3.706211805343628
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.7994214079074252,
+        "discrimination_auroc": 0.7994214079074252,
+        "feature_index": 3799,
+        "mean_difference": 0.30826711654663086,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.7994214079074252,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 3.4385976791381836,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 3.7468647956848145
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 5.801451206207275,
+          "behavior_label": "other",
+          "example_id": "68713da6f5aeb58ad1a69ade",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 5.750344276428223,
+          "behavior_label": "other",
+          "example_id": "fa6699ef2f127137a428f3e5",
+          "source_dataset": "math_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 5.727967739105225,
+          "behavior_label": "other",
+          "example_id": "b6e851b48918b691f1718fc9",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 5.7164998054504395,
+          "behavior_label": "other",
+          "example_id": "16c942a6eace071c24730c17",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 5.716097831726074,
+          "behavior_label": "other",
+          "example_id": "67c4436300a01bb9865fce3d",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.2290556970819824,
+        "discrimination_auroc": 0.7709443029180176,
+        "feature_index": 3385,
+        "mean_difference": -0.19005155563354492,
+        "orientation": "resistance_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 4.937274932861328,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 4.747223377227783
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.36065573770491804,
+        "discrimination_auroc": 0.639344262295082,
+        "feature_index": 3385,
+        "mean_difference": -0.10422897338867188,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.639344262295082,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 4.876667499542236,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 4.7724385261535645
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 4.708195686340332,
+          "behavior_label": "other",
+          "example_id": "56ea754adb6dc1c20d034ae3",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 4.528256893157959,
+          "behavior_label": "sycophantic",
+          "example_id": "1141aab70dc58a825ae4da0c",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 4.516558647155762,
+          "behavior_label": "other",
+          "example_id": "c57e8f377cad9d2ad38db143",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 4.509622573852539,
+          "behavior_label": "other",
+          "example_id": "915ffa841239d0952d5d745a",
+          "source_dataset": "truthful_qa_mc",
+          "split": "validation"
+        },
+        {
+          "activation": 4.48663854598999,
+          "behavior_label": "other",
+          "example_id": "238454472478accc585bb43a",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.7424588930060213,
+        "discrimination_auroc": 0.7424588930060213,
+        "feature_index": 2380,
+        "mean_difference": 0.7175931930541992,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 1.9091801643371582,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 2.6267733573913574
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.8389585342333655,
+        "discrimination_auroc": 0.8389585342333655,
+        "feature_index": 2380,
+        "mean_difference": 1.007297396659851,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.8389585342333655,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 1.919927716255188,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 2.927225112915039
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 6.128055095672607,
+          "behavior_label": "other",
+          "example_id": "cbc5ed394cde11e290b34f0b",
+          "source_dataset": "aqua_mc",
+          "split": "train"
+        },
+        {
+          "activation": 6.117465972900391,
+          "behavior_label": "other",
+          "example_id": "e0ecb09485579e6643be2d71",
+          "source_dataset": "aqua_mc",
+          "split": "train"
+        },
+        {
+          "activation": 5.952968597412109,
+          "behavior_label": "other",
+          "example_id": "5c4b4777f158c4dd436a9be4",
+          "source_dataset": "aqua_mc",
+          "split": "train"
+        },
+        {
+          "activation": 5.921786308288574,
+          "behavior_label": "other",
+          "example_id": "559076b0bb9e37f8ec89f8d2",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 5.895595073699951,
+          "behavior_label": "other",
+          "example_id": "d6ea40b6f5fc8c9fa82ba71f",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.2681073413617415,
+        "discrimination_auroc": 0.7318926586382585,
+        "feature_index": 3497,
+        "mean_difference": -0.5335767269134521,
+        "orientation": "resistance_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 3.964533567428589,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 3.4309568405151367
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.3167791706846673,
+        "discrimination_auroc": 0.6832208293153327,
+        "feature_index": 3497,
+        "mean_difference": -0.44730567932128906,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.6832208293153327,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 3.887495517730713,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 3.440189838409424
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 4.01872444152832,
+          "behavior_label": "other",
+          "example_id": "ccf53ddb5ad693f36d09d2f1",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 3.9341413974761963,
+          "behavior_label": "other",
+          "example_id": "a8a36ab9a5321435b844976a",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 3.905316114425659,
+          "behavior_label": "other",
+          "example_id": "12a2ceab9067fe4690dfa7cd",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 3.78694748878479,
+          "behavior_label": "other",
+          "example_id": "8b7c8eccd9148c9a1c07bf5d",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 3.77626895904541,
+          "behavior_label": "other",
+          "example_id": "fec8bd998b1a590d6850f4cb",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.7310386753126448,
+        "discrimination_auroc": 0.7310386753126448,
+        "feature_index": 3239,
+        "mean_difference": 0.3753495216369629,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 2.4417781829833984,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 2.8171277046203613
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.7073288331726133,
+        "discrimination_auroc": 0.7073288331726133,
+        "feature_index": 3239,
+        "mean_difference": 0.3496382236480713,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.7073288331726133,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 2.55509352684021,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 2.9047317504882812
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 6.445581912994385,
+          "behavior_label": "sycophantic",
+          "example_id": "b23ba27a6f3fddfeff21eff2",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.310137748718262,
+          "behavior_label": "resistant",
+          "example_id": "399bea9454f63847c8b2abe6",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.245959281921387,
+          "behavior_label": "resistant",
+          "example_id": "d1f7efa5755808d93796af82",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.237847328186035,
+          "behavior_label": "resistant",
+          "example_id": "97fb84c2a31a0ec6b200058f",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.2048139572143555,
+          "behavior_label": "resistant",
+          "example_id": "3ff59b38910c73f32d18779e",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.2740345646132469,
+        "discrimination_auroc": 0.7259654353867531,
+        "feature_index": 486,
+        "mean_difference": -1.280477523803711,
+        "orientation": "resistance_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 4.558165550231934,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 3.2776880264282227
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.2063645130183221,
+        "discrimination_auroc": 0.793635486981678,
+        "feature_index": 486,
+        "mean_difference": -1.5778093338012695,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.793635486981678,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 4.391214370727539,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 2.8134050369262695
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 6.138458251953125,
+          "behavior_label": "other",
+          "example_id": "e1f05f45d5a217e3ca6a58f3",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.1142191886901855,
+          "behavior_label": "other",
+          "example_id": "e056caff7e39e7115fe6f871",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.108077049255371,
+          "behavior_label": "other",
+          "example_id": "8e03b81ac008f1d4c580ca3e",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.096733570098877,
+          "behavior_label": "other",
+          "example_id": "289b8a485b7d361b674650f5",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.092135906219482,
+          "behavior_label": "other",
+          "example_id": "9aa3a58f3790018afb48153b",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.7233528253821213,
+        "discrimination_auroc": 0.7233528253821213,
+        "feature_index": 252,
+        "mean_difference": 0.22211694717407227,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 4.591153144836426,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 4.813270092010498
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.6624879459980714,
+        "discrimination_auroc": 0.6624879459980714,
+        "feature_index": 252,
+        "mean_difference": 0.1633434295654297,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.6624879459980714,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 4.672781944274902,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 4.836125373840332
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 1.7917571067810059,
+          "behavior_label": "other",
+          "example_id": "e056caff7e39e7115fe6f871",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.761497974395752,
+          "behavior_label": "resistant",
+          "example_id": "f9815ab1c4633e92617ddbb0",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.7398440837860107,
+          "behavior_label": "sycophantic",
+          "example_id": "5b0ecdd7c10513fa3410a7f1",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.6798392534255981,
+          "behavior_label": "sycophantic",
+          "example_id": "1fcda13ce4b896f9f526d9f3",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.6661248207092285,
+          "behavior_label": "other",
+          "example_id": "b64fb24317f41ed0262116cf",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 155,
+        "auroc": 0.6972122510421491,
+        "discrimination_auroc": 0.6972122510421491,
+        "feature_index": 2241,
+        "mean_difference": 0.22652186453342438,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 0.11029411764705882,
+        "resistant_mean": 0.05156181752681732,
+        "sycophantic_active_rate": 0.4921259842519685,
+        "sycophantic_mean": 0.2780836820602417
+      },
+      "validation": {
+        "active_examples": 33,
+        "auroc": 0.7215525554484089,
+        "discrimination_auroc": 0.7215525554484089,
+        "feature_index": 2241,
+        "mean_difference": 0.2648344337940216,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.7215525554484089,
+        "resistant_active_rate": 0.19672131147540983,
+        "resistant_mean": 0.09752317517995834,
+        "sycophantic_active_rate": 0.6176470588235294,
+        "sycophantic_mean": 0.36235761642456055
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 6.463039398193359,
+          "behavior_label": "other",
+          "example_id": "c156ecfc182b5c7c87963995",
+          "source_dataset": "math_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 6.4241485595703125,
+          "behavior_label": "other",
+          "example_id": "7f2bf643c21e66cb51dfba34",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.4193830490112305,
+          "behavior_label": "other",
+          "example_id": "8522192339763271b8c250b6",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.398599624633789,
+          "behavior_label": "other",
+          "example_id": "cfc1867881289f636fa25970",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 6.397149085998535,
+          "behavior_label": "other",
+          "example_id": "c69be9976c8a14cfb16f9015",
+          "source_dataset": "math_mc_cot",
+          "split": "validation"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.3094025011579435,
+        "discrimination_auroc": 0.6905974988420565,
+        "feature_index": 5576,
+        "mean_difference": -0.35961484909057617,
+        "orientation": "resistance_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 5.74831485748291,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 5.388700008392334
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.22179363548698167,
+        "discrimination_auroc": 0.7782063645130184,
+        "feature_index": 5576,
+        "mean_difference": -0.5237522125244141,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.7782063645130184,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 5.758965492248535,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 5.235213279724121
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 1.640142798423767,
+          "behavior_label": "sycophantic",
+          "example_id": "0311fc3c1859ba6832210838",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.5528031587600708,
+          "behavior_label": "other",
+          "example_id": "4ac1d567ed8e2ff298d46d08",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.5473062992095947,
+          "behavior_label": "other",
+          "example_id": "32a02c6bae7baef655c0b561",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.512980580329895,
+          "behavior_label": "other",
+          "example_id": "c4c8e446b373128c74d6d25a",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.4991419315338135,
+          "behavior_label": "other",
+          "example_id": "a3aa271050cbc6926ff50173",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "validation"
+        }
+      ],
+      "train": {
+        "active_examples": 280,
+        "auroc": 0.6779252547475684,
+        "discrimination_auroc": 0.6779252547475684,
+        "feature_index": 4234,
+        "mean_difference": 0.29868054389953613,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 0.43014705882352944,
+        "resistant_mean": 0.22936557233333588,
+        "sycophantic_active_rate": 0.6417322834645669,
+        "sycophantic_mean": 0.5280461311340332
+      },
+      "validation": {
+        "active_examples": 48,
+        "auroc": 0.6943105110896818,
+        "discrimination_auroc": 0.6943105110896818,
+        "feature_index": 4234,
+        "mean_difference": 0.30699679255485535,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.6943105110896818,
+        "resistant_active_rate": 0.4098360655737705,
+        "resistant_mean": 0.23413047194480896,
+        "sycophantic_active_rate": 0.6764705882352942,
+        "sycophantic_mean": 0.5411272644996643
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 0.4958454966545105,
+          "behavior_label": "other",
+          "example_id": "5af1b0131ff15e99873fbc4e",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 0.48350369930267334,
+          "behavior_label": "sycophantic",
+          "example_id": "e25d9f65d4ed365d333ead72",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 0.4830482602119446,
+          "behavior_label": "sycophantic",
+          "example_id": "9f0f854fc67e6aa70b9b2050",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 0.4754820466041565,
+          "behavior_label": "sycophantic",
+          "example_id": "1e724e072d9165db10697528",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 0.46976184844970703,
+          "behavior_label": "sycophantic",
+          "example_id": "7337c9b9a8c4db917e55e502",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 96,
+        "auroc": 0.6572125405280222,
+        "discrimination_auroc": 0.6572125405280222,
+        "feature_index": 5168,
+        "mean_difference": 0.09441258758306503,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 0.03308823529411765,
+        "resistant_mean": 0.007648580241948366,
+        "sycophantic_active_rate": 0.3425196850393701,
+        "sycophantic_mean": 0.10206116735935211
+      },
+      "validation": {
+        "active_examples": 8,
+        "auroc": 0.5930568948891032,
+        "discrimination_auroc": 0.5930568948891032,
+        "feature_index": 5168,
+        "mean_difference": 0.07053422927856445,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.5930568948891032,
+        "resistant_active_rate": 0.01639344262295082,
+        "resistant_mean": 0.007356493268162012,
+        "sycophantic_active_rate": 0.20588235294117646,
+        "sycophantic_mean": 0.07789072394371033
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 4.905147552490234,
+          "behavior_label": "other",
+          "example_id": "4c4000da583002401aa7c8a3",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 4.894940376281738,
+          "behavior_label": "other",
+          "example_id": "6b924cce3bfb1661a1a7837a",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 4.686829090118408,
+          "behavior_label": "other",
+          "example_id": "07327cfaf5b65604f06152e6",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 4.679867267608643,
+          "behavior_label": "other",
+          "example_id": "74743a7a1ac0f5e179bc9377",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 4.657635688781738,
+          "behavior_label": "other",
+          "example_id": "ccf53ddb5ad693f36d09d2f1",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 521,
+        "auroc": 0.656713177396943,
+        "discrimination_auroc": 0.656713177396943,
+        "feature_index": 4821,
+        "mean_difference": 0.255748987197876,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 0.9852941176470589,
+        "resistant_mean": 1.3025708198547363,
+        "sycophantic_active_rate": 0.9960629921259843,
+        "sycophantic_mean": 1.5583198070526123
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.6041465766634523,
+        "discrimination_auroc": 0.6041465766634523,
+        "feature_index": 4821,
+        "mean_difference": 0.24481713771820068,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.6041465766634523,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 1.3967716693878174,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 1.641588807106018
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 3.3143091201782227,
+          "behavior_label": "other",
+          "example_id": "758e22abab61249d65c329ed",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 3.300208806991577,
+          "behavior_label": "other",
+          "example_id": "be57ce9c74dca6115559d7cc",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 3.29931640625,
+          "behavior_label": "other",
+          "example_id": "ccf53ddb5ad693f36d09d2f1",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 3.2915146350860596,
+          "behavior_label": "other",
+          "example_id": "b72f3922e981368eb3ec1d15",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 3.291306257247925,
+          "behavior_label": "other",
+          "example_id": "af3d94e7d0a11dc6499ffff9",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "validation"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.6474641037517369,
+        "discrimination_auroc": 0.6474641037517369,
+        "feature_index": 3835,
+        "mean_difference": 0.09662008285522461,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 2.6991519927978516,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 2.795772075653076
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.4840887174541948,
+        "discrimination_auroc": 0.5159112825458052,
+        "feature_index": 3835,
+        "mean_difference": -0.013875722885131836,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.4840887174541948,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 2.777808904647827,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 2.7639331817626953
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 1.7358604669570923,
+          "behavior_label": "resistant",
+          "example_id": "fcf70466695c27130672db9d",
+          "source_dataset": "math_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 1.699059009552002,
+          "behavior_label": "resistant",
+          "example_id": "ae3dc72f1b89efc7e02d7488",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.6590533256530762,
+          "behavior_label": "resistant",
+          "example_id": "e85d975fcdb28981f905c4de",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.6181951761245728,
+          "behavior_label": "resistant",
+          "example_id": "aca234a9bf6cc526f9164aaa",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.599613070487976,
+          "behavior_label": "other",
+          "example_id": "4241c95ec44a3c43911981bf",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 291,
+        "auroc": 0.36019279759147754,
+        "discrimination_auroc": 0.6398072024085224,
+        "feature_index": 5424,
+        "mean_difference": -0.26154330372810364,
+        "orientation": "resistance_high",
+        "resistant_active_rate": 0.6213235294117647,
+        "resistant_mean": 0.5280278921127319,
+        "sycophantic_active_rate": 0.48031496062992124,
+        "sycophantic_mean": 0.2664845883846283
+      },
+      "validation": {
+        "active_examples": 58,
+        "auroc": 0.41996142719382834,
+        "discrimination_auroc": 0.5800385728061717,
+        "feature_index": 5424,
+        "mean_difference": -0.16513261198997498,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.5800385728061717,
+        "resistant_active_rate": 0.6065573770491803,
+        "resistant_mean": 0.5084367394447327,
+        "sycophantic_active_rate": 0.6176470588235294,
+        "sycophantic_mean": 0.3433041274547577
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 1.8976227045059204,
+          "behavior_label": "other",
+          "example_id": "15e54dd1196c011b00c87cf8",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.7719647884368896,
+          "behavior_label": "other",
+          "example_id": "d3019706471519158f8d3bdc",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.625624179840088,
+          "behavior_label": "other",
+          "example_id": "fc0639c12050ca39b38de38b",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 1.5834622383117676,
+          "behavior_label": "other",
+          "example_id": "e94fa6e6ba930c85a1069226",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 1.5680906772613525,
+          "behavior_label": "other",
+          "example_id": "9475e8ab147c40e681b83f4b",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 171,
+        "auroc": 0.6373465724872627,
+        "discrimination_auroc": 0.6373465724872627,
+        "feature_index": 368,
+        "mean_difference": 0.15864017605781555,
+        "orientation": "sycophancy_high",
+        "resistant_active_rate": 0.20588235294117646,
+        "resistant_mean": 0.09475824236869812,
+        "sycophantic_active_rate": 0.452755905511811,
+        "sycophantic_mean": 0.25339841842651367
+      },
+      "validation": {
+        "active_examples": 27,
+        "auroc": 0.625602700096432,
+        "discrimination_auroc": 0.625602700096432,
+        "feature_index": 368,
+        "mean_difference": 0.13825803995132446,
+        "orientation": "sycophancy_high",
+        "oriented_auroc": 0.625602700096432,
+        "resistant_active_rate": 0.19672131147540983,
+        "resistant_mean": 0.09957969933748245,
+        "sycophantic_active_rate": 0.4411764705882353,
+        "sycophantic_mean": 0.23783773183822632
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 0.6809245347976685,
+          "behavior_label": "other",
+          "example_id": "edc3bf4944fc2e2fbf92d0d7",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 0.6600185632705688,
+          "behavior_label": "other",
+          "example_id": "000b9509dcb8c37fa2cf17a9",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 0.6378685235977173,
+          "behavior_label": "other",
+          "example_id": "7f7b7f148e22030375bda0c9",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 0.6376808285713196,
+          "behavior_label": "other",
+          "example_id": "3a6708ca432593533322536f",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 0.6315298080444336,
+          "behavior_label": "other",
+          "example_id": "46ca75b52747bdc45ff15b12",
+          "source_dataset": "mmlu_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 94,
+        "auroc": 0.36313107920333487,
+        "discrimination_auroc": 0.6368689207966651,
+        "feature_index": 6072,
+        "mean_difference": -0.08266466856002808,
+        "orientation": "resistance_high",
+        "resistant_active_rate": 0.3088235294117647,
+        "resistant_mean": 0.09217599034309387,
+        "sycophantic_active_rate": 0.03937007874015748,
+        "sycophantic_mean": 0.009511321783065796
+      },
+      "validation": {
+        "active_examples": 18,
+        "auroc": 0.3524590163934426,
+        "discrimination_auroc": 0.6475409836065573,
+        "feature_index": 6072,
+        "mean_difference": -0.09557821601629257,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.6475409836065573,
+        "resistant_active_rate": 0.29508196721311475,
+        "resistant_mean": 0.09557821601629257,
+        "sycophantic_active_rate": 0.0,
+        "sycophantic_mean": 0.0
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 6.064053058624268,
+          "behavior_label": "other",
+          "example_id": "c22dedb3e956cbbcef0abc57",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 5.871346950531006,
+          "behavior_label": "other",
+          "example_id": "cd920ae8ce6380ae278fb6f6",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 5.855618000030518,
+          "behavior_label": "other",
+          "example_id": "32f4314ddf11eb523b749827",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 5.829320430755615,
+          "behavior_label": "other",
+          "example_id": "1efd520200a143e1b97716dc",
+          "source_dataset": "truthful_qa_mc",
+          "split": "train"
+        },
+        {
+          "activation": 5.817206382751465,
+          "behavior_label": "other",
+          "example_id": "3a25046f823b94adbd943a43",
+          "source_dataset": "truthful_qa_mc",
+          "split": "validation"
+        }
+      ],
+      "train": {
+        "active_examples": 526,
+        "auroc": 0.36990504863362667,
+        "discrimination_auroc": 0.6300949513663734,
+        "feature_index": 3124,
+        "mean_difference": -0.13821840286254883,
+        "orientation": "resistance_high",
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 2.4573872089385986,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 2.31916880607605
+      },
+      "validation": {
+        "active_examples": 95,
+        "auroc": 0.43490838958534234,
+        "discrimination_auroc": 0.5650916104146577,
+        "feature_index": 3124,
+        "mean_difference": -0.06358861923217773,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.5650916104146577,
+        "resistant_active_rate": 1.0,
+        "resistant_mean": 2.498704433441162,
+        "sycophantic_active_rate": 1.0,
+        "sycophantic_mean": 2.4351158142089844
+      }
+    },
+    {
+      "strongest_examples": [
+        {
+          "activation": 4.124872207641602,
+          "behavior_label": "sycophantic",
+          "example_id": "cea929de23abf18b81d9ac0c",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 4.085790634155273,
+          "behavior_label": "resistant",
+          "example_id": "3ff59b38910c73f32d18779e",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 3.990353584289551,
+          "behavior_label": "sycophantic",
+          "example_id": "23a894e0c1b765eacc895950",
+          "source_dataset": "math_mc_cot",
+          "split": "validation"
+        },
+        {
+          "activation": 3.9699783325195312,
+          "behavior_label": "sycophantic",
+          "example_id": "b23ba27a6f3fddfeff21eff2",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        },
+        {
+          "activation": 3.94580078125,
+          "behavior_label": "sycophantic",
+          "example_id": "2f1e2cc6a2698322afbc669a",
+          "source_dataset": "math_mc_cot",
+          "split": "train"
+        }
+      ],
+      "train": {
+        "active_examples": 413,
+        "auroc": 0.37540528022232517,
+        "discrimination_auroc": 0.6245947197776749,
+        "feature_index": 1870,
+        "mean_difference": -0.6726248264312744,
+        "orientation": "resistance_high",
+        "resistant_active_rate": 0.9411764705882353,
+        "resistant_mean": 2.0387725830078125,
+        "sycophantic_active_rate": 0.6181102362204725,
+        "sycophantic_mean": 1.366147756576538
+      },
+      "validation": {
+        "active_examples": 70,
+        "auroc": 0.3302796528447445,
+        "discrimination_auroc": 0.6697203471552555,
+        "feature_index": 1870,
+        "mean_difference": -0.8238039016723633,
+        "orientation": "resistance_high",
+        "oriented_auroc": 0.6697203471552555,
+        "resistant_active_rate": 0.8524590163934426,
+        "resistant_mean": 1.8647654056549072,
+        "sycophantic_active_rate": 0.5294117647058824,
+        "sycophantic_mean": 1.040961503982544
+      }
+    }
+  ]
+}

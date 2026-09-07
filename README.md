@@ -7,7 +7,7 @@ The project targets GPT-2 small and will progress from behavioral measurement to
 sparse feature discovery and causal activation steering. It is a research repository,
 not a user-facing product.
 
-## Current status: Phase 3 implementation
+## Current status: Phase 3 complete
 
 The repository provides the Phase 0 foundation:
 
@@ -49,9 +49,12 @@ influence, alongside substantial general answer instability. See
 Phase 3 now provides a cloud-portable activation corpus and sparse-feature pipeline:
 checksum-verified `safetensors` shards, a unit-normalized Top-K sparse autoencoder,
 train-only feature ranking, validation-only confirmation, dead-feature diagnostics,
-and top-activating example retrieval. The complete pipeline passes locally on a small
-real-model smoke run. The full scientific SAE training remains intentionally assigned
-to a CUDA cloud run; smoke metrics are not reported as findings. See
+and top-activating example retrieval. The full CUDA run extracted 166,528 token
+activations from 2,602 train/validation prompts. Its 6,144-feature Top-K SAE reached
+91.31% validation explained variance with three dead validation features. Feature 4825,
+selected on train only, separates sycophantic from resistant behavior with validation
+AUROC 0.820; the best raw residual neuron reaches 0.830, so sparse-feature superiority
+is not claimed. See
 [the Phase 3 methodology](docs/phase3_sae.md).
 
 The full CUDA run is orchestrated by the lightweight

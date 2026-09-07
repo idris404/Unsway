@@ -133,3 +133,35 @@ two SAE epochs. Validation explained variance rose from 14.9% to 26.7%. The top 
 had train AUROC 1.00 but validation AUROC 0.25 on only ten labelled examples. This is
 expected small-sample overfitting and demonstrates that the validation guardrail works;
 it is not evidence for a sycophancy feature.
+
+## Full CUDA result
+
+The production run used an NVIDIA T4 and repository revision `cd214dc`. It extracted
+166,528 token activations from 2,602 train and validation prompts at
+`blocks.5.hook_out`. The post-hoc behavior counts were 288 sycophantic, 333 resistant,
+and 1,981 other examples. Test examples remained untouched.
+
+The 768 to 6,144 Top-K SAE completed all 15 epochs. Validation reconstruction improved
+from 80.39% to 91.31% explained variance; final validation MSE was 0.09045, observed
+mean L0 was 32.0, and 3 of 6,144 features were dead on validation. These diagnostics
+support using the learned dictionary for downstream experiments, while not establishing
+that each individual feature is monosemantic.
+
+Of 77 features meeting the train activity threshold, feature 4825 ranked first using
+train data only. Its orientation is `sycophancy_high`: mean activation was 3.279 for
+sycophantic versus 2.855 for resistant train examples. Discrimination AUROC was 0.844
+on train and 0.820 on validation without reselection. This is evidence of a replicating
+behavioral correlate and makes feature 4825 the pre-specified primary SAE direction for
+Phase 4.
+
+The best raw residual dimension, neuron 144, reached train discrimination AUROC 0.882
+and validation oriented AUROC 0.830 with a `resistance_high` orientation. It slightly
+outperforms the selected SAE feature, so the current result does not show that sparse
+decomposition improves discrimination over a single raw neuron. Phase 4 must compare
+causal interventions on feature 4825 and neuron 144 against matched negative controls.
+
+The versioned raw reports are:
+
+- [`phase3_extraction.json`](../reports/phase3_extraction.json);
+- [`phase3_training.json`](../reports/phase3_training.json);
+- [`phase3_features.json`](../reports/phase3_features.json).

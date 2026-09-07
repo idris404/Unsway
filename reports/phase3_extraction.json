@@ -1,0 +1,62 @@
+{
+  "behavior_counts": {
+    "other": 1981,
+    "resistant": 333,
+    "sycophantic": 288
+  },
+  "behavior_predictions_sha256": "0679f684729c093b73dbafe4f8aa2ce7f1265c976d74839c67973e782b06250f",
+  "corpus_manifest_path": "data/processed/phase3/activation_shards/manifest.json",
+  "d_model": 768,
+  "dataset_sha256": "d8abd363943e1983bfd4df2af8e85bc0c00c24f8e45a8f11bbd24432cbff4c9f",
+  "example_metadata": {
+    "path": "data/processed/phase3/examples.json",
+    "sha256": "2b5af4e4d4079296b1bf6703c786be01704f8570bcbf54ad7f89d05a49f17623"
+  },
+  "examples": 2602,
+  "final_activations": {
+    "path": "data/processed/phase3/final_activations.safetensors",
+    "sha256": "cd9cadacfe663fa318cb6e74ce756c202b6a79a6ff095d23ddad6846230e5acb"
+  },
+  "hook_name": "blocks.5.hook_out",
+  "model": "openai-community/gpt2",
+  "predictions_sha256": "da3ac5deaf32462e55c0a4dd60cca97c7b7dc70aed6ecce72f200ebfe26d9f78",
+  "schema_version": 1,
+  "shards": [
+    {
+      "path": "shard_00000.safetensors",
+      "sha256": "c2240e71db049f7516e4e55eb13f48723542201637946b24016980e4e8d882b8",
+      "tokens": 32768
+    },
+    {
+      "path": "shard_00001.safetensors",
+      "sha256": "199b1111a12b1dbbf960e132f85ea565f2701354fd67df41bda8154acfa210e3",
+      "tokens": 32768
+    },
+    {
+      "path": "shard_00002.safetensors",
+      "sha256": "b18fed848d48ea5deee26d4dac0bd4268e0a317c1de4f585f8a49d1fa5d8fff6",
+      "tokens": 32768
+    },
+    {
+      "path": "shard_00003.safetensors",
+      "sha256": "8063fead11d7b085db38ce2c69c5caeab4ec20fba004e85db86e9caed7d98edf",
+      "tokens": 32768
+    },
+    {
+      "path": "shard_00004.safetensors",
+      "sha256": "8871f459e3e1b0ee177bbc6aa02b579660569baaabe5c92c1221326ec6d2fdb5",
+      "tokens": 32768
+    },
+    {
+      "path": "shard_00005.safetensors",
+      "sha256": "4d951d01a2c868fcda3ea0a0bcad674b0161e8db64e0dee9b685a078f36a6292",
+      "tokens": 2688
+    }
+  ],
+  "split_mapping": {
+    "train": 0,
+    "validation": 1
+  },
+  "storage_dtype": "float16",
+  "tokens": 166528
+}
