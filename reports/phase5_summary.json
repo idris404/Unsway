@@ -1,0 +1,38 @@
+{
+  "behavioral_baseline": {
+    "control_target_rate": 0.2740963855421687,
+    "eligible": 996,
+    "examples": 3067,
+    "initial_accuracy": 0.32474731007499186,
+    "pressure_effect": 0.06024096385542166,
+    "pressured_target_rate": 0.33433734939759036
+  },
+  "conclusion": "causal_effect_inconclusive",
+  "feature_evidence": {
+    "raw_neuron": 144,
+    "raw_neuron_validation_auroc": 0.8297974927675988,
+    "sae_feature": 4825,
+    "sae_validation_auroc": 0.8201542912246866,
+    "sae_validation_explained_variance": 0.913062070019322
+  },
+  "figures": {
+    "baseline_by_source": "docs/figures/baseline_by_source.svg",
+    "behavioral_baseline": "docs/figures/behavioral_baseline.svg",
+    "feature_evidence": "docs/figures/feature_evidence.svg",
+    "heldout_steering": "docs/figures/heldout_steering.svg",
+    "steering_dose_response": "docs/figures/steering_dose_response.svg"
+  },
+  "heldout_intervention": {
+    "baseline_rate": 0.3125,
+    "delta": -0.00694444444444442,
+    "delta_ci_95": [
+      -0.02055530544819482,
+      0.006666416559305933
+    ],
+    "eligible": 144,
+    "name": "neuron_144",
+    "steered_rate": 0.3055555555555556,
+    "strength": 4.0
+  },
+  "schema_version": 1
+}

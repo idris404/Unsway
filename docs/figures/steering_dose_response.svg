@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+<title id="title">Validation dose-response</title>
+<desc id="desc">Unsway research figure: Validation dose-response</desc>
+<rect width="960" height="560" fill="#ffffff"/>
+<style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}</style>
+<text x="40.0" y="42.0" font-size="24" font-weight="700" text-anchor="start" fill="#172033">Validation dose-response</text>
+<text x="40.0" y="70.0" font-size="14" font-weight="400" text-anchor="start" fill="#5b6577">Targeted sycophancy under positive activation additions</text>
+<text x="24" y="295.0" font-size="14" font-weight="600" text-anchor="middle" fill="#172033" transform="rotate(-90 24 295.0)">Targeted sycophancy (%)</text>
+<line x1="92.0" y1="478.0" x2="920.0" y2="478.0" stroke="#dbe3ee"/>
+<text x="80.0" y="483.0" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">0%</text>
+<line x1="92.0" y1="404.8" x2="920.0" y2="404.8" stroke="#dbe3ee"/>
+<text x="80.0" y="409.8" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">6%</text>
+<line x1="92.0" y1="331.6" x2="920.0" y2="331.6" stroke="#dbe3ee"/>
+<text x="80.0" y="336.6" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">12%</text>
+<line x1="92.0" y1="258.4" x2="920.0" y2="258.4" stroke="#dbe3ee"/>
+<text x="80.0" y="263.4" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">18%</text>
+<line x1="92.0" y1="185.2" x2="920.0" y2="185.2" stroke="#dbe3ee"/>
+<text x="80.0" y="190.2" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">24%</text>
+<line x1="92.0" y1="112.0" x2="920.0" y2="112.0" stroke="#dbe3ee"/>
+<text x="80.0" y="117.0" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">30%</text>
+<text x="92.0" y="506.0" font-size="12" font-weight="400" text-anchor="middle" fill="#5b6577">0</text>
+<text x="299.0" y="506.0" font-size="12" font-weight="400" text-anchor="middle" fill="#5b6577">+0.5</text>
+<text x="506.0" y="506.0" font-size="12" font-weight="400" text-anchor="middle" fill="#5b6577">+1</text>
+<text x="713.0" y="506.0" font-size="12" font-weight="400" text-anchor="middle" fill="#5b6577">+2</text>
+<text x="920.0" y="506.0" font-size="12" font-weight="400" text-anchor="middle" fill="#5b6577">+4</text>
+<text x="506.0" y="512.0" font-size="12" font-weight="600" text-anchor="middle" fill="#172033">Steering strength (residual-stream L2 norm)</text>
+<circle cx="92.0" cy="195.8" r="4" fill="#2563eb"/>
+<circle cx="299.0" cy="195.8" r="4" fill="#2563eb"/>
+<circle cx="506.0" cy="187.5" r="4" fill="#2563eb"/>
+<circle cx="713.0" cy="187.5" r="4" fill="#2563eb"/>
+<circle cx="920.0" cy="179.2" r="4" fill="#2563eb"/>
+<polyline points="92.0,195.8 299.0,195.8 506.0,187.5 713.0,187.5 920.0,179.2" fill="none" stroke="#2563eb" stroke-width="3"/>
+<line x1="92.0" y1="91" x2="116.0" y2="91" stroke="#2563eb" stroke-width="3"/>
+<text x="123.0" y="96.0" font-size="12" font-weight="400" text-anchor="start" fill="#172033">SAE 4825</text>
+<circle cx="92.0" cy="195.8" r="4" fill="#16a34a"/>
+<circle cx="299.0" cy="195.8" r="4" fill="#16a34a"/>
+<circle cx="506.0" cy="195.8" r="4" fill="#16a34a"/>
+<circle cx="713.0" cy="195.8" r="4" fill="#16a34a"/>
+<circle cx="920.0" cy="212.4" r="4" fill="#16a34a"/>
+<polyline points="92.0,195.8 299.0,195.8 506.0,195.8 713.0,195.8 920.0,212.4" fill="none" stroke="#16a34a" stroke-width="3"/>
+<line x1="272.0" y1="91" x2="296.0" y2="91" stroke="#16a34a" stroke-width="3"/>
+<text x="303.0" y="96.0" font-size="12" font-weight="400" text-anchor="start" fill="#172033">Neuron 144</text>
+<circle cx="92.0" cy="195.8" r="4" fill="#64748b"/>
+<circle cx="299.0" cy="187.5" r="4" fill="#64748b"/>
+<circle cx="506.0" cy="187.5" r="4" fill="#64748b"/>
+<circle cx="713.0" cy="179.2" r="4" fill="#64748b"/>
+<circle cx="920.0" cy="154.3" r="4" fill="#64748b"/>
+<polyline points="92.0,195.8 299.0,187.5 506.0,187.5 713.0,179.2 920.0,154.3" fill="none" stroke="#64748b" stroke-width="3"/>
+<line x1="452.0" y1="91" x2="476.0" y2="91" stroke="#64748b" stroke-width="3"/>
+<text x="483.0" y="96.0" font-size="12" font-weight="400" text-anchor="start" fill="#172033">Random control</text>
+<text x="40.0" y="538.0" font-size="11" font-weight="400" text-anchor="start" fill="#5b6577">Source: reports/phase4_validation.json · validation split · positive doses only</text>
+</svg>

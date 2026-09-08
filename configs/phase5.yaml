@@ -1,0 +1,14 @@
+inputs:
+  phase2_report: "reports/phase2_baseline.json"
+  phase3_training_report: "reports/phase3_training.json"
+  phase3_feature_report: "reports/phase3_features.json"
+  phase4_validation_report: "reports/phase4_validation.json"
+  phase4_test_report: "reports/phase4_test.json"
+
+output:
+  figure_dir: "docs/figures"
+  summary_report: "reports/phase5_summary.json"
+
+style:
+  width: 960
+  height: 560
