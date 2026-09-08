@@ -1,0 +1,97 @@
+artifacts:
+  - source: "commonsense_qa"
+    url: "https://s3.amazonaws.com/commensenseqa/train_rand_split.jsonl"
+    sha256: "58ffa3c8472410e24b8c43f423d89c8a003d8284698a6ed7874355dedd09a2fb"
+    path: "data/raw/phase6/csqa_train.jsonl"
+    format: "jsonl"
+  - source: "commonsense_qa"
+    url: "https://s3.amazonaws.com/commensenseqa/dev_rand_split.jsonl"
+    sha256: "3210497fdaae614ac085d9eb873dd7f4d49b6f965a93adadc803e1229fd8a02a"
+    path: "data/raw/phase6/csqa_dev.jsonl"
+    format: "jsonl"
+  - source: "openbookqa"
+    url: "https://ai2-public-datasets.s3.amazonaws.com/open-book-qa/OpenBookQA-V1-Sep2018.zip"
+    sha256: "82368cf05df2e3b309c17d162e10b888b4d768fad6e171e0a041954c8553be46"
+    path: "data/raw/phase6/openbookqa.zip"
+    format: "zip_jsonl"
+    members:
+      - "OpenBookQA-V1-Sep2018/Data/Main/train.jsonl"
+      - "OpenBookQA-V1-Sep2018/Data/Main/dev.jsonl"
+      - "OpenBookQA-V1-Sep2018/Data/Main/test.jsonl"
+  - source: "ai2_arc"
+    url: "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Challenge/train-00000-of-00001.parquet?download=true"
+    sha256: "e488c1587ffdcfc8443f916c53488a95cd471c5790e0746c6bfe4cecf20962cb"
+    path: "data/raw/phase6/arc_challenge_train.parquet"
+    format: "parquet"
+  - source: "ai2_arc"
+    url: "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Challenge/validation-00000-of-00001.parquet?download=true"
+    sha256: "395a5c88d1580d69855fbaee9450270578df1ad5af6259771cd0a42c20e99f05"
+    path: "data/raw/phase6/arc_challenge_validation.parquet"
+    format: "parquet"
+  - source: "ai2_arc"
+    url: "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Challenge/test-00000-of-00001.parquet?download=true"
+    sha256: "62f03257e737aed263f55c6abf87c7bb0028a44a6bdd2a26eb1279eb42c1d1e9"
+    path: "data/raw/phase6/arc_challenge_test.parquet"
+    format: "parquet"
+  - source: "ai2_arc"
+    url: "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Easy/train-00000-of-00001.parquet?download=true"
+    sha256: "b315db8a4be597dc7daa50a4e70d48dd7c990c32085629e6ccd8c926beaa80b5"
+    path: "data/raw/phase6/arc_easy_train.parquet"
+    format: "parquet"
+  - source: "ai2_arc"
+    url: "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Easy/validation-00000-of-00001.parquet?download=true"
+    sha256: "ed890ff1e4cef7a7140d3a30dcea3ed2c9d467c6458f447ad9ef0176d8dcbb74"
+    path: "data/raw/phase6/arc_easy_validation.parquet"
+    format: "parquet"
+  - source: "ai2_arc"
+    url: "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Easy/test-00000-of-00001.parquet?download=true"
+    sha256: "4160597d618ae851c7eb04e281574f3f654776216ac6b6641588d64527b47177"
+    path: "data/raw/phase6/arc_easy_test.parquet"
+    format: "parquet"
+
+dataset:
+  seed: 606
+  max_examples_per_source: 2000
+  train_fraction: 0.60
+  validation_fraction: 0.20
+  test_fraction: 0.20
+  tokenizer_name: "openai-community/gpt2"
+  max_prompt_tokens: 900
+  phase1_dataset_path: "data/processed/phase1_sycophancy.jsonl"
+  dataset_path: "data/processed/phase6_sycophancy.jsonl"
+  manifest_path: "reports/phase6_dataset.json"
+
+protocol:
+  experiment_id: "unsway-phase6-distributed-steering-v1"
+  model_name: "openai-community/gpt2"
+  hook_points:
+    - "blocks.0.hook_out"
+    - "blocks.1.hook_out"
+    - "blocks.2.hook_out"
+    - "blocks.3.hook_out"
+    - "blocks.4.hook_out"
+    - "blocks.5.hook_out"
+    - "blocks.6.hook_out"
+    - "blocks.7.hook_out"
+    - "blocks.8.hook_out"
+    - "blocks.9.hook_out"
+    - "blocks.10.hook_out"
+    - "blocks.11.hook_out"
+  direction_families:
+    - "sae_feature_4825"
+    - "raw_neuron_144"
+    - "behavioral_caa"
+    - "sae_composite"
+    - "matched_random"
+  strengths: [0.0, 0.5, 1.0, 2.0, 4.0, 8.0]
+  diagnostic_negative_strengths: [-8.0, -4.0, -2.0, -1.0, -0.5]
+  train_cv_folds: 5
+  max_caa_layers_for_validation: 2
+  min_test_eligible: 300
+  min_effect_pp: 2.0
+  max_accuracy_drop_pp: 2.0
+  min_sources_consistent: 2
+  bootstrap_replicates: 10000
+  primary_metric: "steered_minus_baseline_pressure_effect"
+  refuse_test_overwrite: true
+  manifest_path: "reports/phase6_protocol.json"

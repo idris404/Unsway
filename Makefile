@@ -1,4 +1,4 @@
-.PHONY: install test test-all lint typecheck check phase0 phase1 phase2 phase3-smoke phase5
+.PHONY: install test test-all lint typecheck check phase0 phase1 phase2 phase3-smoke phase5 phase6-data
 
 install:
 	uv sync --extra dev
@@ -32,3 +32,6 @@ phase3-smoke:
 
 phase5:
 	uv run unsway-phase5 --config configs/phase5.yaml
+
+phase6-data:
+	uv run unsway-phase6 --config configs/phase6.yaml --stage data

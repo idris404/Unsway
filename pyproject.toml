@@ -12,6 +12,7 @@ license = { text = "MIT" }
 authors = [{ name = "Idris" }]
 dependencies = [
   "numpy>=1.26,<3",
+  "pyarrow>=15,<26",
   "pyyaml>=6.0.2,<7",
   "safetensors>=0.6,<1",
   "torch>=2.6,<3",
@@ -33,6 +34,7 @@ unsway-phase2 = "unsway.cli.phase2:main"
 unsway-phase3 = "unsway.cli.phase3:main"
 unsway-phase4 = "unsway.cli.phase4:main"
 unsway-phase5 = "unsway.cli.phase5:main"
+unsway-phase6 = "unsway.cli.phase6:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/unsway"]
@@ -62,5 +64,5 @@ packages = ["unsway"]
 warn_unreachable = true
 
 [[tool.mypy.overrides]]
-module = ["yaml", "transformer_lens.*"]
+module = ["yaml", "transformer_lens.*", "pyarrow.*"]
 ignore_missing_imports = true

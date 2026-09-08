@@ -5,6 +5,8 @@ multiple-choice answer after a user confidently argues for a specific wrong answ
 
 The repository follows the full experiment from behavioral measurement to sparse
 feature discovery and activation steering. The final causal result is inconclusive.
+A pre-registered Phase 6 extension is now testing distributed steering directions on
+a fresh external holdout; no Phase 6 test outcome has been opened.
 
 ## Main result
 

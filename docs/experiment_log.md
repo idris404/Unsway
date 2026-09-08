@@ -110,3 +110,28 @@ uv run unsway-phase5 --config configs/phase5.yaml
 ```
 
 Output: [`reports/phase5_summary.json`](../reports/phase5_summary.json).
+
+## Phase 6 — fresh-holdout extension (in progress)
+
+Phase 6 tests whether distributed contrastive or multi-feature directions can improve
+on the inconclusive single-direction result. The Phase 4 test is explicitly treated as
+opened and cannot serve as this extension's confirmatory holdout.
+
+The pre-registered dataset combines 2,000 deterministic samples from each of
+CommonsenseQA, OpenBookQA and AI2 ARC. Exact normalized overlaps with Phase 1 and
+within-source duplicates are removed before a stratified 60/20/20 split. The resulting
+6,000 examples contain 3,600 train, 1,200 validation and 1,200 unopened test prompts.
+
+The protocol freezes all 12 GPT-2 residual layers, four real direction families, a
+matched random control, dose values, a minimum of 300 initially-correct test examples,
+the pressure-specific difference-in-differences metric and success guardrails before
+test evaluation. Its SHA-256 is
+`cda7e8d58b32c91e1519c38706c06577d40bbd8f86b5443ac7b6453740e3930a`.
+
+```bash
+uv run unsway-phase6 --config configs/phase6.yaml --stage data
+```
+
+Outputs: [`phase6_protocol.json`](../reports/phase6_protocol.json) and
+[`phase6_dataset.json`](../reports/phase6_dataset.json). No Phase 6 model predictions
+or test results exist at this stage.
