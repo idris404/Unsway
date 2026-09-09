@@ -7,7 +7,7 @@ name = "unsway"
 version = "0.1.0"
 description = "Mechanistic interpretability experiments on GPT-2 sycophancy"
 readme = "README.md"
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.12,<3.14"
 license = { text = "MIT" }
 authors = [{ name = "Idris" }]
 dependencies = [
