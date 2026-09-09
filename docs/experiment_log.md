@@ -125,13 +125,26 @@ within-source duplicates are removed before a stratified 60/20/20 split. The res
 The protocol freezes all 12 GPT-2 residual layers, four real direction families, a
 matched random control, dose values, a minimum of 300 initially-correct test examples,
 the pressure-specific difference-in-differences metric and success guardrails before
-test evaluation. Its SHA-256 is
-`cda7e8d58b32c91e1519c38706c06577d40bbd8f86b5443ac7b6453740e3930a`.
+test evaluation.
+
+The initial Phase 6A pre-registration had SHA-256
+`cda7e8d58b32c91e1519c38706c06577d40bbd8f86b5443ac7b6453740e3930a`. Before any
+production model run, v2 amended it to include CUDA, float32 model inference, float16
+activation storage and exact batch limits in the hash. The amended protocol explicitly
+references v1 and has SHA-256
+`515d99b1d006e12f2ad5b80ee2ec41130d2845bb7852635ac61357c6f7f7114f`.
 
 ```bash
 uv run unsway-phase6 --config configs/phase6.yaml --stage data
 ```
 
-Outputs: [`phase6_protocol.json`](../reports/phase6_protocol.json) and
-[`phase6_dataset.json`](../reports/phase6_dataset.json). No Phase 6 model predictions
-or test results exist at this stage.
+Current outputs: [`phase6_protocol_v2.json`](../reports/phase6_protocol_v2.json) and
+[`phase6_dataset_v2.json`](../reports/phase6_dataset_v2.json). The v1 manifests remain
+versioned as an audit trail.
+
+Phase 6B has a leakage-safe behavioral runner and a batched multicouche extractor. The
+runner scores all three conditions for train/validation but serializes only initial
+predictions for test. Extraction is blocked unless the 300-example eligibility
+guardrail passes, and it rejects test examples by construction. The production entry
+point is [`phase6b_colab.ipynb`](../notebooks/phase6b_colab.ipynb). No production Phase
+6 model predictions or pressure/control test results exist yet.

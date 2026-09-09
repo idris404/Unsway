@@ -59,10 +59,11 @@ dataset:
   max_prompt_tokens: 900
   phase1_dataset_path: "data/processed/phase1_sycophancy.jsonl"
   dataset_path: "data/processed/phase6_sycophancy.jsonl"
-  manifest_path: "reports/phase6_dataset.json"
+  manifest_path: "reports/phase6_dataset_v2.json"
 
 protocol:
-  experiment_id: "unsway-phase6-distributed-steering-v1"
+  experiment_id: "unsway-phase6-distributed-steering-v2"
+  amends_protocol_sha256: "cda7e8d58b32c91e1519c38706c06577d40bbd8f86b5443ac7b6453740e3930a"
   model_name: "openai-community/gpt2"
   hook_points:
     - "blocks.0.hook_out"
@@ -94,4 +95,22 @@ protocol:
   bootstrap_replicates: 10000
   primary_metric: "steered_minus_baseline_pressure_effect"
   refuse_test_overwrite: true
-  manifest_path: "reports/phase6_protocol.json"
+  manifest_path: "reports/phase6_protocol_v2.json"
+
+runtime:
+  seed: 606
+  model:
+    name: "openai-community/gpt2"
+    device: "cuda"
+    dtype: "float32"
+  max_batch_size: 8
+  max_batch_tokens: 4096
+  storage_dtype: "float16"
+
+phase6b_output:
+  train_validation_predictions_path: "data/processed/phase6_train_validation_predictions.jsonl"
+  test_initial_predictions_path: "data/processed/phase6_test_initial_predictions.jsonl"
+  baseline_report_path: "reports/phase6_baseline.json"
+  activations_path: "data/processed/phase6/multilayer_final_activations.safetensors"
+  activation_metadata_path: "data/processed/phase6/multilayer_examples.json"
+  extraction_report_path: "reports/phase6_extraction.json"

@@ -1,0 +1,140 @@
+{
+  "artifacts": [
+    {
+      "format": "jsonl",
+      "local_sha256": "58ffa3c8472410e24b8c43f423d89c8a003d8284698a6ed7874355dedd09a2fb",
+      "members": [],
+      "sha256": "58ffa3c8472410e24b8c43f423d89c8a003d8284698a6ed7874355dedd09a2fb",
+      "source": "commonsense_qa",
+      "url": "https://s3.amazonaws.com/commensenseqa/train_rand_split.jsonl"
+    },
+    {
+      "format": "jsonl",
+      "local_sha256": "3210497fdaae614ac085d9eb873dd7f4d49b6f965a93adadc803e1229fd8a02a",
+      "members": [],
+      "sha256": "3210497fdaae614ac085d9eb873dd7f4d49b6f965a93adadc803e1229fd8a02a",
+      "source": "commonsense_qa",
+      "url": "https://s3.amazonaws.com/commensenseqa/dev_rand_split.jsonl"
+    },
+    {
+      "format": "zip_jsonl",
+      "local_sha256": "82368cf05df2e3b309c17d162e10b888b4d768fad6e171e0a041954c8553be46",
+      "members": [
+        "OpenBookQA-V1-Sep2018/Data/Main/train.jsonl",
+        "OpenBookQA-V1-Sep2018/Data/Main/dev.jsonl",
+        "OpenBookQA-V1-Sep2018/Data/Main/test.jsonl"
+      ],
+      "sha256": "82368cf05df2e3b309c17d162e10b888b4d768fad6e171e0a041954c8553be46",
+      "source": "openbookqa",
+      "url": "https://ai2-public-datasets.s3.amazonaws.com/open-book-qa/OpenBookQA-V1-Sep2018.zip"
+    },
+    {
+      "format": "parquet",
+      "local_sha256": "e488c1587ffdcfc8443f916c53488a95cd471c5790e0746c6bfe4cecf20962cb",
+      "members": [],
+      "sha256": "e488c1587ffdcfc8443f916c53488a95cd471c5790e0746c6bfe4cecf20962cb",
+      "source": "ai2_arc",
+      "url": "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Challenge/train-00000-of-00001.parquet?download=true"
+    },
+    {
+      "format": "parquet",
+      "local_sha256": "395a5c88d1580d69855fbaee9450270578df1ad5af6259771cd0a42c20e99f05",
+      "members": [],
+      "sha256": "395a5c88d1580d69855fbaee9450270578df1ad5af6259771cd0a42c20e99f05",
+      "source": "ai2_arc",
+      "url": "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Challenge/validation-00000-of-00001.parquet?download=true"
+    },
+    {
+      "format": "parquet",
+      "local_sha256": "62f03257e737aed263f55c6abf87c7bb0028a44a6bdd2a26eb1279eb42c1d1e9",
+      "members": [],
+      "sha256": "62f03257e737aed263f55c6abf87c7bb0028a44a6bdd2a26eb1279eb42c1d1e9",
+      "source": "ai2_arc",
+      "url": "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Challenge/test-00000-of-00001.parquet?download=true"
+    },
+    {
+      "format": "parquet",
+      "local_sha256": "b315db8a4be597dc7daa50a4e70d48dd7c990c32085629e6ccd8c926beaa80b5",
+      "members": [],
+      "sha256": "b315db8a4be597dc7daa50a4e70d48dd7c990c32085629e6ccd8c926beaa80b5",
+      "source": "ai2_arc",
+      "url": "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Easy/train-00000-of-00001.parquet?download=true"
+    },
+    {
+      "format": "parquet",
+      "local_sha256": "ed890ff1e4cef7a7140d3a30dcea3ed2c9d467c6458f447ad9ef0176d8dcbb74",
+      "members": [],
+      "sha256": "ed890ff1e4cef7a7140d3a30dcea3ed2c9d467c6458f447ad9ef0176d8dcbb74",
+      "source": "ai2_arc",
+      "url": "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Easy/validation-00000-of-00001.parquet?download=true"
+    },
+    {
+      "format": "parquet",
+      "local_sha256": "4160597d618ae851c7eb04e281574f3f654776216ac6b6641588d64527b47177",
+      "members": [],
+      "sha256": "4160597d618ae851c7eb04e281574f3f654776216ac6b6641588d64527b47177",
+      "source": "ai2_arc",
+      "url": "https://huggingface.co/datasets/allenai/ai2_arc/resolve/210d026faf9955653af8916fad021475a3f00453/ARC-Easy/test-00000-of-00001.parquet?download=true"
+    }
+  ],
+  "build": {
+    "max_examples_per_source": 2000,
+    "phase1_dataset_sha256": "d8abd363943e1983bfd4df2af8e85bc0c00c24f8e45a8f11bbd24432cbff4c9f",
+    "seed": 606,
+    "split_fractions": {
+      "test": 0.2,
+      "train": 0.6,
+      "validation": 0.2
+    }
+  },
+  "dataset_sha256": "7645000f60b38d9598d173577dea8eaa2d82499e0e771a8108037174aaa873f3",
+  "protocol_sha256": "515d99b1d006e12f2ad5b80ee2ec41130d2845bb7852635ac61357c6f7f7114f",
+  "report": {
+    "builder_excluded_counts": {},
+    "examples": 6000,
+    "external_excluded_counts": {
+      "ai2_arc:duplicate_question": 36,
+      "ai2_arc:phase1_overlap": 1,
+      "ai2_arc:source_cap": 5750,
+      "commonsense_qa:duplicate_question": 1,
+      "commonsense_qa:source_cap": 8961,
+      "openbookqa:duplicate_question": 166,
+      "openbookqa:phase1_overlap": 7,
+      "openbookqa:source_cap": 3784
+    },
+    "raw_counts": {
+      "ai2_arc": 7787,
+      "commonsense_qa": 10962,
+      "openbookqa": 5957
+    },
+    "source_counts": {
+      "ai2_arc": 2000,
+      "commonsense_qa": 2000,
+      "openbookqa": 2000
+    },
+    "source_rows_after_sampling": 6000,
+    "source_split_counts": {
+      "ai2_arc": {
+        "test": 400,
+        "train": 1200,
+        "validation": 400
+      },
+      "commonsense_qa": {
+        "test": 400,
+        "train": 1200,
+        "validation": 400
+      },
+      "openbookqa": {
+        "test": 400,
+        "train": 1200,
+        "validation": 400
+      }
+    },
+    "split_counts": {
+      "test": 1200,
+      "train": 3600,
+      "validation": 1200
+    }
+  },
+  "schema_version": 1
+}

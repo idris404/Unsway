@@ -1,4 +1,4 @@
-"""Pre-register Phase 6 and build its fresh external evaluation dataset."""
+"""Run pre-registered Phase 6 data, baseline, and extraction stages."""
 
 from __future__ import annotations
 
@@ -10,7 +10,15 @@ from typing import Any
 
 from transformers import AutoTokenizer
 
-from unsway.phase6 import build_phase6_dataset, load_phase6_config, write_protocol_manifest
+from unsway.model import load_transformer
+from unsway.phase6 import (
+    build_phase6_dataset,
+    extract_multilayer_activations,
+    load_phase6_config,
+    run_phase6_baseline,
+    write_protocol_manifest,
+)
+from unsway.runtime import resolve_device, seed_everything
 
 LOGGER = logging.getLogger(__name__)
 
@@ -26,9 +34,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--stage",
-        choices=("protocol", "data"),
+        choices=("protocol", "data", "baseline", "extract", "phase6b"),
         default="data",
-        help="Write only the protocol or also acquire and build the fresh dataset",
+        help="Pipeline stage to execute",
     )
     return parser
 
@@ -42,28 +50,64 @@ def main(argv: Sequence[str] | None = None) -> int:
     LOGGER.info("Frozen protocol sha256=%s", protocol["protocol_sha256"])
     if args.stage == "protocol":
         return 0
-    if not config.dataset.phase1_dataset_path.is_file():
-        raise FileNotFoundError(
-            f"Phase 1 dataset is required for overlap checks: "
-            f"{config.dataset.phase1_dataset_path}. Run unsway-phase1 first."
+    if args.stage == "data":
+        if not config.dataset.phase1_dataset_path.is_file():
+            raise FileNotFoundError(
+                f"Phase 1 dataset is required for overlap checks: "
+                f"{config.dataset.phase1_dataset_path}. Run unsway-phase1 first."
+            )
+        LOGGER.info("Loading tokenizer=%s", config.dataset.tokenizer_name)
+        tokenizer = AutoTokenizer.from_pretrained(config.dataset.tokenizer_name)
+        tokenizer.model_max_length = 1_000_000
+
+        def count_tokens(text: str) -> int:
+            encoded: Any = tokenizer.encode(text, add_special_tokens=False)
+            return len(encoded)
+
+        manifest = build_phase6_dataset(config, count_tokens)
+        report = manifest["report"]
+        LOGGER.info(
+            "Fresh dataset built | examples=%d | sources=%s | splits=%s",
+            report["examples"],
+            report["source_counts"],
+            report["split_counts"],
         )
-    LOGGER.info("Loading tokenizer=%s", config.dataset.tokenizer_name)
-    tokenizer = AutoTokenizer.from_pretrained(config.dataset.tokenizer_name)
-    tokenizer.model_max_length = 1_000_000
+        LOGGER.info("dataset_sha256=%s", manifest["dataset_sha256"])
+        return 0
 
-    def count_tokens(text: str) -> int:
-        encoded: Any = tokenizer.encode(text, add_special_tokens=False)
-        return len(encoded)
+    seed_everything(config.runtime.seed)
+    device = resolve_device(config.runtime.model.device)
+    LOGGER.info("Loading model=%s device=%s", config.runtime.model.name, device)
+    model = load_transformer(config.runtime.model)
+    if args.stage in {"baseline", "phase6b"}:
 
-    manifest = build_phase6_dataset(config, count_tokens)
-    report = manifest["report"]
-    LOGGER.info(
-        "Fresh dataset built | examples=%d | sources=%s | splits=%s",
-        report["examples"],
-        report["source_counts"],
-        report["split_counts"],
-    )
-    LOGGER.info("dataset_sha256=%s", manifest["dataset_sha256"])
+        def baseline_progress(partition: str, done: int, total: int) -> None:
+            if done == 1 or done % 25 == 0 or done == total:
+                LOGGER.info("Baseline %s batches=%d/%d", partition, done, total)
+
+        baseline = run_phase6_baseline(config, model, progress=baseline_progress)
+        test_summary = baseline["test_initial_only"]["metrics"]["overall"]
+        LOGGER.info(
+            "Baseline complete status=%s test_initial_correct=%d/%d",
+            baseline["status"],
+            test_summary["initial_correct_trials"],
+            test_summary["trials"],
+        )
+        if baseline["status"] != "ready_for_frozen_test":
+            raise RuntimeError("Phase 6 minimum test-eligibility guardrail was not met")
+    if args.stage in {"extract", "phase6b"}:
+
+        def extraction_progress(done: int, total: int) -> None:
+            if done == 1 or done % 25 == 0 or done == total:
+                LOGGER.info("Multilayer extraction batches=%d/%d", done, total)
+
+        extraction = extract_multilayer_activations(config, model, progress=extraction_progress)
+        LOGGER.info(
+            "Extraction complete examples=%d shape=%s behavior_counts=%s",
+            extraction["examples"],
+            extraction["shape"],
+            extraction["behavior_counts"],
+        )
     return 0
 
 
