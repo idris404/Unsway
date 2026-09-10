@@ -8,7 +8,9 @@ feature discovery and activation steering. The final causal result is inconclusi
 A pre-registered Phase 6 extension is testing distributed steering directions. Its
 first fresh holdout stopped at the 300-example eligibility guardrail with 299 initially
 correct answers; pressure/control test prompts remained unopened. Phase 6C now freezes
-a larger, fully disjoint replacement holdout before the next model run.
+a larger, fully disjoint replacement holdout before the next model run. Its initial-only
+baseline passed with 537 correct answers out of 2,400, unlocking training-only activation
+extraction while the replacement pressure/control prompts remain unopened.
 
 ## Main result
 
@@ -83,6 +85,10 @@ tests/          Offline invariants and real-model integration checks
 
 Large datasets, activation tensors and model weights are intentionally excluded from
 Git. Expensive artifacts are checksum-verified and backed up separately.
+
+Phase 6C uses `notebooks/phase6c_colab.ipynb` for the replacement-holdout baseline and
+`notebooks/phase6c_extraction_colab.ipynb` for the integrity-gated extraction. The second
+notebook requires the baseline report and initial-prediction JSONL produced by the first.
 
 ## Scope
 

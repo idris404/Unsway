@@ -59,10 +59,52 @@ def _baseline_report(config: Phase6Config) -> dict[str, Any]:
     return value
 
 
+def _external_eligibility_gate(
+    training_config: Phase6Config,
+    eligibility_config: Phase6Config,
+) -> dict[str, Any]:
+    """Validate a replacement holdout before unlocking training-only extraction."""
+    if training_config.runtime.model != eligibility_config.runtime.model:
+        raise ValueError("Training and eligibility runs must use the same model")
+    if training_config.protocol.hook_points != eligibility_config.protocol.hook_points:
+        raise ValueError("Training and eligibility protocols must use the same hook points")
+
+    eligibility_protocol_sha, eligibility_dataset_sha = validate_phase6_inputs(eligibility_config)
+    report = _baseline_report(eligibility_config)
+    if report.get("protocol_sha256") != eligibility_protocol_sha:
+        raise ValueError("Replacement eligibility report uses a different protocol")
+    if report.get("dataset", {}).get("sha256") != eligibility_dataset_sha:
+        raise ValueError("Replacement eligibility report uses a different dataset")
+    if report.get("status") != "ready_for_frozen_test":
+        raise ValueError("Replacement holdout did not pass the eligibility guardrail")
+
+    test = report.get("test_initial_only", {})
+    if test.get("pressure_scored") is not False or test.get("control_scored") is not False:
+        raise ValueError("Replacement eligibility must be based on initial-only test scoring")
+    correct = int(test.get("metrics", {}).get("overall", {}).get("initial_correct_trials", 0))
+    if correct < eligibility_config.protocol.min_test_eligible:
+        raise ValueError("Replacement eligibility count is below its frozen threshold")
+    predictions_path = eligibility_config.phase6b_output.test_initial_predictions_path
+    if sha256_file(predictions_path) != test.get("predictions_sha256"):
+        raise ValueError("Replacement initial-prediction checksum mismatch")
+
+    return {
+        "mode": "external_replacement_holdout",
+        "protocol_sha256": eligibility_protocol_sha,
+        "dataset_sha256": eligibility_dataset_sha,
+        "initial_predictions_sha256": test["predictions_sha256"],
+        "initial_correct_trials": correct,
+        "minimum_eligible_required": eligibility_config.protocol.min_test_eligible,
+        "pressure_scored": False,
+        "control_scored": False,
+    }
+
+
 def extract_multilayer_activations(
     config: Phase6Config,
     model: MultiCacheModel,
     *,
+    eligibility_config: Phase6Config | None = None,
     progress: Progress | None = None,
 ) -> dict[str, Any]:
     """Extract pressured final-token activations from train and validation only."""
@@ -70,7 +112,17 @@ def extract_multilayer_activations(
     baseline = _baseline_report(config)
     if baseline.get("protocol_sha256") != protocol_sha:
         raise ValueError("Phase 6 baseline was produced under a different protocol")
-    if baseline.get("status") != "ready_for_frozen_test":
+    if baseline.get("dataset", {}).get("sha256") != dataset_sha:
+        raise ValueError("Phase 6 baseline was produced from a different dataset")
+    if baseline.get("status") == "ready_for_frozen_test":
+        eligibility_gate: dict[str, Any] = {
+            "mode": "same_protocol_baseline",
+            "protocol_sha256": protocol_sha,
+            "dataset_sha256": dataset_sha,
+        }
+    elif eligibility_config is not None:
+        eligibility_gate = _external_eligibility_gate(config, eligibility_config)
+    else:
         raise ValueError("Test eligibility guardrail failed; activation extraction is blocked")
 
     examples = [
@@ -165,6 +217,7 @@ def extract_multilayer_activations(
         "protocol_sha256": protocol_sha,
         "dataset_sha256": dataset_sha,
         "behavior_predictions_sha256": actual_behavior_sha,
+        "eligibility_gate": eligibility_gate,
         "hook_points": hooks,
         "storage_dtype": config.runtime.storage_dtype,
         "shape": list(activations.shape),

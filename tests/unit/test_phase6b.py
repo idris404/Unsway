@@ -182,3 +182,108 @@ def test_multilayer_extraction_contains_no_test_examples(tmp_path: Path) -> None
     assert report["test_examples_extracted"] == 0
     assert report["split_counts"] == {"train": 2, "validation": 1}
     assert all("test" not in prompt for prompt in model.seen_texts)
+
+
+def test_replacement_holdout_can_unlock_training_only_extraction(tmp_path: Path) -> None:
+    training_config, _examples = _config(tmp_path / "training")
+    training_config = replace(
+        training_config,
+        protocol=replace(
+            training_config.protocol,
+            min_test_eligible=3,
+            manifest_path=tmp_path / "training" / "protocol-insufficient.json",
+        ),
+    )
+    write_protocol_manifest(training_config)
+    write_manifest(
+        training_config.dataset.manifest_path,
+        {
+            "protocol_sha256": protocol_sha256(training_config),
+            "dataset_sha256": sha256_file(training_config.dataset.dataset_path),
+        },
+    )
+    model = FakePhase6Model()
+    training_report = run_phase6_baseline(training_config, model)
+    assert training_report["status"] == "insufficient_test_eligibility"
+
+    eligibility_config, _gate_examples = _config(tmp_path / "eligibility")
+    eligibility_config = replace(
+        eligibility_config,
+        protocol=replace(
+            eligibility_config.protocol,
+            experiment_id="replacement-holdout",
+            manifest_path=tmp_path / "eligibility" / "protocol-replacement.json",
+        ),
+    )
+    write_protocol_manifest(eligibility_config)
+    write_manifest(
+        eligibility_config.dataset.manifest_path,
+        {
+            "protocol_sha256": protocol_sha256(eligibility_config),
+            "dataset_sha256": sha256_file(eligibility_config.dataset.dataset_path),
+        },
+    )
+    gate_report = run_phase6_baseline(eligibility_config, FakePhase6Model())
+    assert gate_report["status"] == "ready_for_frozen_test"
+
+    model.seen_texts.clear()
+    report = extract_multilayer_activations(
+        training_config,
+        model,
+        eligibility_config=eligibility_config,
+    )
+
+    assert report["eligibility_gate"]["mode"] == "external_replacement_holdout"
+    assert report["eligibility_gate"]["initial_correct_trials"] == 2
+    assert report["test_examples_extracted"] == 0
+    assert all("test" not in prompt for prompt in model.seen_texts)
+
+
+def test_replacement_gate_rejects_tampered_predictions(tmp_path: Path) -> None:
+    training_config, _examples = _config(tmp_path / "training")
+    training_config = replace(
+        training_config,
+        protocol=replace(
+            training_config.protocol,
+            min_test_eligible=3,
+            manifest_path=tmp_path / "training" / "protocol-insufficient.json",
+        ),
+    )
+    write_protocol_manifest(training_config)
+    write_manifest(
+        training_config.dataset.manifest_path,
+        {
+            "protocol_sha256": protocol_sha256(training_config),
+            "dataset_sha256": sha256_file(training_config.dataset.dataset_path),
+        },
+    )
+    run_phase6_baseline(training_config, FakePhase6Model())
+
+    eligibility_config, _gate_examples = _config(tmp_path / "eligibility")
+    eligibility_config = replace(
+        eligibility_config,
+        protocol=replace(
+            eligibility_config.protocol,
+            experiment_id="replacement-holdout",
+            manifest_path=tmp_path / "eligibility" / "protocol-replacement.json",
+        ),
+    )
+    write_protocol_manifest(eligibility_config)
+    write_manifest(
+        eligibility_config.dataset.manifest_path,
+        {
+            "protocol_sha256": protocol_sha256(eligibility_config),
+            "dataset_sha256": sha256_file(eligibility_config.dataset.dataset_path),
+        },
+    )
+    run_phase6_baseline(eligibility_config, FakePhase6Model())
+    eligibility_config.phase6b_output.test_initial_predictions_path.write_text(
+        "tampered\n", encoding="utf-8"
+    )
+
+    with pytest.raises(ValueError, match="checksum mismatch"):
+        extract_multilayer_activations(
+            training_config,
+            FakePhase6Model(),
+            eligibility_config=eligibility_config,
+        )

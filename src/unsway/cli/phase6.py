@@ -38,6 +38,14 @@ def build_parser() -> argparse.ArgumentParser:
         default="data",
         help="Pipeline stage to execute",
     )
+    parser.add_argument(
+        "--eligibility-config",
+        type=Path,
+        help=(
+            "Frozen replacement-holdout config that may unlock extraction when the "
+            "training protocol's retired test narrowly missed its guardrail"
+        ),
+    )
     return parser
 
 
@@ -46,6 +54,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s | %(message)s")
     config = load_phase6_config(args.config)
+    eligibility_config = (
+        None if args.eligibility_config is None else load_phase6_config(args.eligibility_config)
+    )
     protocol = write_protocol_manifest(config)
     LOGGER.info("Frozen protocol sha256=%s", protocol["protocol_sha256"])
     if args.stage == "protocol":
@@ -101,7 +112,12 @@ def main(argv: Sequence[str] | None = None) -> int:
             if done == 1 or done % 25 == 0 or done == total:
                 LOGGER.info("Multilayer extraction batches=%d/%d", done, total)
 
-        extraction = extract_multilayer_activations(config, model, progress=extraction_progress)
+        extraction = extract_multilayer_activations(
+            config,
+            model,
+            eligibility_config=eligibility_config,
+            progress=extraction_progress,
+        )
         LOGGER.info(
             "Extraction complete examples=%d shape=%s behavior_counts=%s",
             extraction["examples"],
