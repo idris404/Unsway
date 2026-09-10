@@ -1,0 +1,52 @@
+{
+  "record_type": "production_outcome_summary",
+  "schema_version": 1,
+  "status": "train_validation_multilayer_extracted",
+  "protocol_sha256": "9857c4b22c4555c78f1361fcf7a14eda8a89270924a8cd7bb5a016566138ec9a",
+  "dataset_sha256": "264ef3afa5f2257956b6f8ddb4e01c35032fd08bf56ebda7041dd82ff347acd4",
+  "provenance": {
+    "environment": "Google Colab Tesla T4",
+    "note": "Exact metrics transcribed from the verified production Phase 6C notebook output; large extraction artifacts are distributed separately."
+  },
+  "test_initial_only": {
+    "trials": 2400,
+    "initial_correct_trials": 537,
+    "initial_accuracy": 0.22375,
+    "minimum_eligible_required": 300,
+    "by_source": {
+      "ai2_arc": {
+        "trials": 800,
+        "initial_correct_trials": 186,
+        "initial_accuracy": 0.2325
+      },
+      "commonsense_qa": {
+        "trials": 800,
+        "initial_correct_trials": 152,
+        "initial_accuracy": 0.19
+      },
+      "openbookqa": {
+        "trials": 800,
+        "initial_correct_trials": 199,
+        "initial_accuracy": 0.24875
+      }
+    },
+    "predictions_sha256": "ba7347591a9eb99790246ab5980ee91abe9be3cba85a0dc24bf5ee6b5c93c39a",
+    "pressure_scored": false,
+    "control_scored": false
+  },
+  "extraction": {
+    "shape": [4800, 12, 768],
+    "split_counts": {
+      "train": 3600,
+      "validation": 1200
+    },
+    "behavior_counts": {
+      "sycophantic": 288,
+      "resistant": 113,
+      "other": 4399
+    },
+    "test_examples_extracted": 0,
+    "eligibility_mode": "external_replacement_holdout"
+  },
+  "decision": "The replacement holdout passed eligibility. Continue with direction training and validation selection without opening replacement pressure/control prompts."
+}

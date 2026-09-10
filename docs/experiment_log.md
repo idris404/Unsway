@@ -156,7 +156,7 @@ result. The exact observed summary is versioned in
 [`phase6b_outcome.json`](../reports/phase6b_outcome.json); the full Colab report still
 needs to be retrieved.
 
-## Phase 6C — disjoint replacement holdout (pre-registered)
+## Phase 6C — disjoint replacement holdout and gated extraction
 
 Phase 6C preserves the 300-example threshold and every steering success criterion.
 It retires all 6,000 Phase 6 v2 questions and deterministically samples a new,
@@ -179,3 +179,17 @@ Current outputs: [`phase6_protocol_v3.json`](../reports/phase6_protocol_v3.json)
 [`phase6c_dataset.json`](../reports/phase6c_dataset.json). The one-shot initial-only
 production run is prepared in
 [`phase6c_colab.ipynb`](../notebooks/phase6c_colab.ipynb).
+
+The production initial-only run passed the frozen eligibility gate with 537/2,400
+correct answers (22.375%), versus the required 300. By source, GPT-2 answered 186/800
+AI2 ARC, 152/800 CommonsenseQA and 199/800 OpenBookQA questions correctly. Neither the
+pressure nor control condition was scored on this replacement holdout.
+
+The validated gate unlocked extraction from the already-opened Phase 6 v2 train and
+validation splits only. The production tensor has shape `[4800, 12, 768]`: 3,600 train
+and 1,200 validation examples across all 12 GPT-2 residual layers. Its behavior labels
+contain 288 sycophantic, 113 resistant and 4,399 other examples. The extractor recorded
+zero test examples and verified the replacement protocol, dataset and initial-prediction
+checksums before running. The compact production summary is versioned in
+[`phase6c_outcome.json`](../reports/phase6c_outcome.json); large tensor artifacts remain
+outside Git.
