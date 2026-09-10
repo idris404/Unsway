@@ -13,9 +13,12 @@ from transformers import AutoTokenizer
 from unsway.model import load_transformer
 from unsway.phase6 import (
     build_phase6_dataset,
+    build_phase6d_directions,
     extract_multilayer_activations,
     load_phase6_config,
     run_phase6_baseline,
+    run_phase6d_validation,
+    write_phase6d_methods,
     write_protocol_manifest,
 )
 from unsway.runtime import resolve_device, seed_everything
@@ -34,7 +37,16 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--stage",
-        choices=("protocol", "data", "baseline", "extract", "phase6b"),
+        choices=(
+            "protocol",
+            "data",
+            "baseline",
+            "extract",
+            "phase6b",
+            "directions",
+            "validation",
+            "phase6d",
+        ),
         default="data",
         help="Pipeline stage to execute",
     )
@@ -45,6 +57,12 @@ def build_parser() -> argparse.ArgumentParser:
             "Frozen replacement-holdout config that may unlock extraction when the "
             "training protocol's retired test narrowly missed its guardrail"
         ),
+    )
+    parser.add_argument(
+        "--methods-config",
+        type=Path,
+        default=Path("configs/phase6d.yaml"),
+        help="Frozen Phase 6D direction-construction and validation methods",
     )
     return parser
 
@@ -86,10 +104,47 @@ def main(argv: Sequence[str] | None = None) -> int:
         LOGGER.info("dataset_sha256=%s", manifest["dataset_sha256"])
         return 0
 
+    if args.stage in {"directions", "phase6d"}:
+        methods = write_phase6d_methods(args.methods_config)
+        LOGGER.info("Frozen Phase 6D methods sha256=%s", methods["methods_sha256"])
+        directions = build_phase6d_directions(args.methods_config)
+        LOGGER.info(
+            "Directions frozen selected_caa_layers=%s labelled_train=%d",
+            directions["selected_caa_layers"],
+            directions["labelled_train_examples"],
+        )
+        if args.stage == "directions":
+            return 0
+
     seed_everything(config.runtime.seed)
     device = resolve_device(config.runtime.model.device)
     LOGGER.info("Loading model=%s device=%s", config.runtime.model.name, device)
     model = load_transformer(config.runtime.model)
+    if args.stage in {"validation", "phase6d"}:
+
+        def validation_progress(name: str, strength: float, done: int, total: int) -> None:
+            if done == 1 or done % 25 == 0 or done == total:
+                LOGGER.info(
+                    "Validation intervention=%s strength=%s batches=%d/%d",
+                    name,
+                    strength,
+                    done,
+                    total,
+                )
+
+        validation = run_phase6d_validation(
+            args.methods_config,
+            model,
+            max_batch_size=config.runtime.max_batch_size,
+            max_batch_tokens=config.runtime.max_batch_tokens,
+            progress=validation_progress,
+        )
+        LOGGER.info(
+            "Validation complete status=%s selected=%s",
+            validation["status"],
+            validation["selected_confirmatory_candidate"],
+        )
+        return 0
     if args.stage in {"baseline", "phase6b"}:
 
         def baseline_progress(partition: str, done: int, total: int) -> None:

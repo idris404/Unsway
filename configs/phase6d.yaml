@@ -1,0 +1,37 @@
+schema_version: 1
+stage: "phase6d_train_validation"
+phase6_protocol_sha256: "515d99b1d006e12f2ad5b80ee2ec41130d2845bb7852635ac61357c6f7f7114f"
+phase6_dataset_sha256: "7645000f60b38d9598d173577dea8eaa2d82499e0e771a8108037174aaa873f3"
+
+inputs:
+  extraction_report_path: "reports/phase6_extraction.json"
+  activations_path: "data/processed/phase6/multilayer_final_activations.safetensors"
+  metadata_path: "data/processed/phase6/multilayer_examples.json"
+  baseline_predictions_path: "data/processed/phase6_train_validation_predictions.jsonl"
+  legacy_sae_path: "data/processed/phase3/sae.safetensors"
+  legacy_sae_training_report_path: "reports/phase3_training.json"
+  legacy_sae_sha256: "c01496e787d82b529547f586cd51a87319a2a5d8403b5ebe544985cbf6432798"
+
+construction:
+  seed: 606
+  cv_folds: 5
+  selected_caa_layers: 2
+  legacy_layer: 5
+  legacy_sae_feature: 4825
+  legacy_raw_neuron: 144
+  composite_top_features: 8
+
+selection:
+  strengths: [0.5, 1.0, 2.0, 4.0, 8.0]
+  diagnostic_negative_strengths: [-8.0, -4.0, -2.0, -1.0, -0.5]
+  min_effect_pp: 2.0
+  max_accuracy_drop_pp: 2.0
+  min_sources_consistent: 2
+  primary_metric: "steered_minus_baseline_pressure_effect"
+
+output:
+  methods_manifest_path: "reports/phase6d_methods.json"
+  directions_path: "data/processed/phase6/phase6d_directions.safetensors"
+  directions_report_path: "reports/phase6d_directions.json"
+  validation_predictions_path: "data/processed/phase6/phase6d_validation_predictions.jsonl"
+  validation_report_path: "reports/phase6d_validation.json"

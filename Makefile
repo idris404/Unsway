@@ -1,4 +1,4 @@
-.PHONY: install test test-all lint typecheck check phase0 phase1 phase2 phase3-smoke phase5 phase6-data phase6b phase6c-data phase6c-baseline phase6c-extract
+.PHONY: install test test-all lint typecheck check phase0 phase1 phase2 phase3-smoke phase5 phase6-data phase6b phase6c-data phase6c-baseline phase6c-extract phase6d
 
 install:
 	uv sync --extra dev
@@ -47,3 +47,6 @@ phase6c-baseline:
 
 phase6c-extract:
 	uv run unsway-phase6 --config configs/phase6.yaml --stage extract --eligibility-config configs/phase6c.yaml
+
+phase6d:
+	uv run unsway-phase6 --config configs/phase6.yaml --stage phase6d --methods-config configs/phase6d.yaml

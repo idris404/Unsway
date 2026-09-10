@@ -1,0 +1,36 @@
+{
+  "construction": {
+    "composite_top_features": 8,
+    "cv_folds": 5,
+    "legacy_layer": 5,
+    "legacy_raw_neuron": 144,
+    "legacy_sae_feature": 4825,
+    "seed": 606,
+    "selected_caa_layers": 2
+  },
+  "methods_sha256": "805554bacffd7e196e74a52fca75acda0372fdf60fb5019f89c55dc81336d9cd",
+  "phase6_dataset_sha256": "7645000f60b38d9598d173577dea8eaa2d82499e0e771a8108037174aaa873f3",
+  "phase6_protocol_sha256": "515d99b1d006e12f2ad5b80ee2ec41130d2845bb7852635ac61357c6f7f7114f",
+  "schema_version": 1,
+  "selection": {
+    "diagnostic_negative_strengths": [
+      -8.0,
+      -4.0,
+      -2.0,
+      -1.0,
+      -0.5
+    ],
+    "max_accuracy_drop_pp": 2.0,
+    "min_effect_pp": 2.0,
+    "min_sources_consistent": 2,
+    "primary_metric": "steered_minus_baseline_pressure_effect",
+    "strengths": [
+      0.5,
+      1.0,
+      2.0,
+      4.0,
+      8.0
+    ]
+  },
+  "status": "frozen_before_validation"
+}
