@@ -50,6 +50,9 @@ class DatasetConfig:
     phase1_dataset_path: Path
     dataset_path: Path
     manifest_path: Path
+    expected_examples: int | None = None
+    exclusion_dataset_paths: tuple[Path, ...] = ()
+    exclusion_dataset_sha256s: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -73,6 +76,7 @@ class ProtocolConfig:
     primary_metric: str
     refuse_test_overwrite: bool
     manifest_path: Path
+    prior_test_policy: str | None = None
 
 
 @dataclass(frozen=True)
@@ -172,6 +176,17 @@ def load_phase6_config(path: str | Path) -> Phase6Config:
             phase1_dataset_path=Path(str(dataset["phase1_dataset_path"])),
             dataset_path=Path(str(dataset["dataset_path"])),
             manifest_path=Path(str(dataset["manifest_path"])),
+            expected_examples=(
+                None
+                if dataset.get("expected_examples") is None
+                else int(dataset["expected_examples"])
+            ),
+            exclusion_dataset_paths=tuple(
+                Path(str(item)) for item in dataset.get("exclusion_dataset_paths", [])
+            ),
+            exclusion_dataset_sha256s=tuple(
+                str(item) for item in dataset.get("exclusion_dataset_sha256s", [])
+            ),
         )
         parsed_protocol = ProtocolConfig(
             experiment_id=str(protocol["experiment_id"]),
@@ -197,6 +212,11 @@ def load_phase6_config(path: str | Path) -> Phase6Config:
             primary_metric=str(protocol["primary_metric"]),
             refuse_test_overwrite=bool(protocol["refuse_test_overwrite"]),
             manifest_path=Path(str(protocol["manifest_path"])),
+            prior_test_policy=(
+                None
+                if protocol.get("prior_test_policy") is None
+                else str(protocol["prior_test_policy"])
+            ),
         )
         device = str(model.get("device", "auto"))
         dtype = str(model.get("dtype", "float32"))
@@ -238,10 +258,16 @@ def load_phase6_config(path: str | Path) -> Phase6Config:
         parsed_dataset.validation_fraction,
         parsed_dataset.test_fraction,
     )
-    if abs(sum(fractions) - 1.0) > 1e-9 or min(fractions) <= 0:
-        raise ValueError("Phase 6 split fractions must be positive and sum to 1")
+    if abs(sum(fractions) - 1.0) > 1e-9 or min(fractions) < 0 or max(fractions) <= 0:
+        raise ValueError("Phase 6 split fractions must be non-negative and sum to 1")
     if parsed_dataset.max_examples_per_source <= 0 or parsed_dataset.max_prompt_tokens <= 0:
         raise ValueError("Dataset size and prompt-token limits must be positive")
+    if parsed_dataset.expected_examples is not None and parsed_dataset.expected_examples <= 0:
+        raise ValueError("Expected dataset size must be positive")
+    if len(parsed_dataset.exclusion_dataset_paths) != len(parsed_dataset.exclusion_dataset_sha256s):
+        raise ValueError("Every exclusion dataset path requires one SHA-256")
+    for index, digest in enumerate(parsed_dataset.exclusion_dataset_sha256s):
+        _validate_sha256(digest, f"exclusion_dataset_sha256s[{index}]")
     if len({artifact.source for artifact in artifacts}) < 2:
         raise ValueError("Phase 6 requires at least two independent source families")
     if len(parsed_protocol.hook_points) != 12:
@@ -288,6 +314,16 @@ def load_phase6_config(path: str | Path) -> Phase6Config:
 
 def protocol_payload(config: Phase6Config) -> dict[str, Any]:
     """Return the path-independent scientific protocol used for hashing."""
+    dataset_payload = {
+        key: value
+        for key, value in asdict(config.dataset).items()
+        if not key.endswith(("_path", "_paths")) and value not in (None, (), [])
+    }
+    protocol_config_payload = {
+        key: value
+        for key, value in asdict(config.protocol).items()
+        if key != "manifest_path" and value is not None
+    }
     return {
         "schema_version": 1,
         "experiment_id": config.protocol.experiment_id,
@@ -301,12 +337,8 @@ def protocol_payload(config: Phase6Config) -> dict[str, Any]:
             }
             for artifact in config.artifacts
         ],
-        "dataset": {
-            key: value for key, value in asdict(config.dataset).items() if not key.endswith("_path")
-        },
-        "protocol": {
-            key: value for key, value in asdict(config.protocol).items() if key != "manifest_path"
-        },
+        "dataset": dataset_payload,
+        "protocol": protocol_config_payload,
         "runtime": {
             "seed": config.runtime.seed,
             "model": asdict(config.runtime.model),

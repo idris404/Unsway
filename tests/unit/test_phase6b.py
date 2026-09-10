@@ -7,6 +7,7 @@ from dataclasses import replace
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
 import torch
 from safetensors.torch import load_file
 
@@ -154,6 +155,18 @@ def test_baseline_never_scores_test_pressure_or_control(tmp_path: Path) -> None:
     assert report["status"] == "ready_for_frozen_test"
     assert report["test_initial_only"]["pressure_scored"] is False
     assert report["test_initial_only"]["control_scored"] is False
+
+
+def test_baseline_refuses_to_overwrite_frozen_test_outputs(tmp_path: Path) -> None:
+    config, _examples = _config(tmp_path)
+    model = FakePhase6Model()
+    run_phase6_baseline(config, model)
+    model.seen_texts.clear()
+
+    with pytest.raises(FileExistsError, match="Refusing to overwrite"):
+        run_phase6_baseline(config, model)
+
+    assert model.seen_texts == []
 
 
 def test_multilayer_extraction_contains_no_test_examples(tmp_path: Path) -> None:

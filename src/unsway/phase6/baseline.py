@@ -108,6 +108,13 @@ def run_phase6_baseline(
     progress: Progress | None = None,
 ) -> dict[str, Any]:
     """Score full train/validation behavior and only initial test accuracy."""
+    protected_outputs = (
+        config.phase6b_output.test_initial_predictions_path,
+        config.phase6b_output.baseline_report_path,
+    )
+    if config.protocol.refuse_test_overwrite and any(path.exists() for path in protected_outputs):
+        existing = [str(path) for path in protected_outputs if path.exists()]
+        raise FileExistsError("Refusing to overwrite frozen test outputs: " + ", ".join(existing))
     protocol_sha, dataset_sha = validate_phase6_inputs(config)
     examples = load_dataset(config.dataset.dataset_path)
     train_validation = [example for example in examples if example.split.value != "test"]

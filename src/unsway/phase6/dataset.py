@@ -149,12 +149,27 @@ def _load_questions(
             except (KeyError, TypeError, ValueError):
                 excluded[f"{artifact.source}:invalid_row"] += 1
 
-    reference_questions = {
+    phase1_questions = {
         normalize_question(example.question)
         for example in load_dataset(config.dataset.phase1_dataset_path)
     }
+    prior_phase_questions: set[str] = set()
+    for path, expected_sha256 in zip(
+        config.dataset.exclusion_dataset_paths,
+        config.dataset.exclusion_dataset_sha256s,
+        strict=True,
+    ):
+        actual_sha256 = sha256_file(path)
+        if actual_sha256 != expected_sha256:
+            raise ValueError(
+                f"Exclusion dataset checksum mismatch for {path}: "
+                f"{actual_sha256} != {expected_sha256}"
+            )
+        prior_phase_questions.update(
+            normalize_question(example.question) for example in load_dataset(path)
+        )
     selected: list[SourceQuestion] = []
-    seen: set[str] = set(reference_questions)
+    seen: set[str] = phase1_questions | prior_phase_questions
     for source, questions in sorted(by_source.items()):
         unique: list[SourceQuestion] = []
         for question in sorted(
@@ -163,7 +178,12 @@ def _load_questions(
         ):
             key = normalize_question(question.question)
             if key in seen:
-                reason = "phase1_overlap" if key in reference_questions else "duplicate_question"
+                if key in phase1_questions:
+                    reason = "phase1_overlap"
+                elif key in prior_phase_questions:
+                    reason = "prior_phase_overlap"
+                else:
+                    reason = "duplicate_question"
                 excluded[f"{source}:{reason}"] += 1
                 continue
             seen.add(key)
@@ -203,7 +223,8 @@ def write_protocol_manifest(config: Phase6Config) -> dict[str, Any]:
         "status": "preregistered_before_fresh_test",
         "protocol_sha256": digest,
         "protocol": protocol_payload(config),
-        "prior_test_policy": (
+        "prior_test_policy": config.protocol.prior_test_policy
+        or (
             "Phase 4 test results are considered opened and cannot serve as the "
             "confirmatory Phase 6 holdout."
         ),
@@ -230,6 +251,14 @@ def build_phase6_dataset(config: Phase6Config, token_counter: TokenCounter) -> d
         token_counter,
         max_prompt_tokens=config.dataset.max_prompt_tokens,
     )
+    if (
+        config.dataset.expected_examples is not None
+        and len(examples) != config.dataset.expected_examples
+    ):
+        raise ValueError(
+            f"Phase 6 dataset has {len(examples)} examples; "
+            f"expected exactly {config.dataset.expected_examples}"
+        )
     write_dataset(config.dataset.dataset_path, examples)
     source_split_counts: dict[str, dict[str, int]] = defaultdict(dict)
     for source in source_names:
@@ -259,6 +288,9 @@ def build_phase6_dataset(config: Phase6Config, token_counter: TokenCounter) -> d
                 "test": config.dataset.test_fraction,
             },
             "phase1_dataset_sha256": sha256_file(config.dataset.phase1_dataset_path),
+            "exclusion_datasets": [
+                {"sha256": digest} for digest in config.dataset.exclusion_dataset_sha256s
+            ],
         },
         "report": {
             "raw_counts": raw_counts,

@@ -5,8 +5,10 @@ multiple-choice answer after a user confidently argues for a specific wrong answ
 
 The repository follows the full experiment from behavioral measurement to sparse
 feature discovery and activation steering. The final causal result is inconclusive.
-A pre-registered Phase 6 extension is now testing distributed steering directions on
-a fresh external holdout; no Phase 6 test outcome has been opened.
+A pre-registered Phase 6 extension is testing distributed steering directions. Its
+first fresh holdout stopped at the 300-example eligibility guardrail with 299 initially
+correct answers; pressure/control test prompts remained unopened. Phase 6C now freezes
+a larger, fully disjoint replacement holdout before the next model run.
 
 ## Main result
 

@@ -146,5 +146,36 @@ Phase 6B has a leakage-safe behavioral runner and a batched multicouche extracto
 runner scores all three conditions for train/validation but serializes only initial
 predictions for test. Extraction is blocked unless the 300-example eligibility
 guardrail passes, and it rejects test examples by construction. The production entry
-point is [`phase6b_colab.ipynb`](../notebooks/phase6b_colab.ipynb). No production Phase
-6 model predictions or pressure/control test results exist yet.
+point is [`phase6b_colab.ipynb`](../notebooks/phase6b_colab.ipynb).
+
+The production baseline stopped at the pre-registered guardrail: GPT-2 answered
+299/1,200 test questions correctly before pressure, one short of the required 300.
+The Phase 6 v2 pressure and control prompts were never scored, and multicouche
+extraction was not run. This is an insufficient-eligibility outcome, not a steering
+result. The exact observed summary is versioned in
+[`phase6b_outcome.json`](../reports/phase6b_outcome.json); the full Colab report still
+needs to be retrieved.
+
+## Phase 6C — disjoint replacement holdout (pre-registered)
+
+Phase 6C preserves the 300-example threshold and every steering success criterion.
+It retires all 6,000 Phase 6 v2 questions and deterministically samples a new,
+test-only holdout from the unused rows of the same checksum-pinned sources. The new
+holdout contains 2,400 examples: 800 each from CommonsenseQA, OpenBookQA and AI2 ARC.
+It has zero normalized question overlap with Phase 1 or Phase 6 v2.
+
+The v3 protocol explicitly amends v2 and records why replacement was necessary. Its
+SHA-256 is `9857c4b22c4555c78f1361fcf7a14eda8a89270924a8cd7bb5a016566138ec9a`;
+the replacement dataset SHA-256 is
+`264ef3afa5f2257956b6f8ddb4e01c35032fd08bf56ebda7041dd82ff347acd4`.
+Only initial prompts may be evaluated until at least 300 initially correct examples
+are confirmed.
+
+```bash
+uv run unsway-phase6 --config configs/phase6c.yaml --stage data
+```
+
+Current outputs: [`phase6_protocol_v3.json`](../reports/phase6_protocol_v3.json) and
+[`phase6c_dataset.json`](../reports/phase6c_dataset.json). The one-shot initial-only
+production run is prepared in
+[`phase6c_colab.ipynb`](../notebooks/phase6c_colab.ipynb).
