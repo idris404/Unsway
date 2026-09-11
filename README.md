@@ -90,6 +90,9 @@ Phase 6C uses `notebooks/phase6c_colab.ipynb` for the replacement-holdout baseli
 `notebooks/phase6c_extraction_colab.ipynb` for the integrity-gated extraction. The second
 notebook reuses the baseline artifacts when present or reproduces the initial-only gate
 deterministically, then verifies every frozen checksum before extracting any activations.
+Phase 6D uses `notebooks/phase6d_colab.ipynb` to restore or deterministically rebuild its
+prerequisites, construct directions from train data only, select doses on validation only,
+and save the complete result bundle to Google Drive before any confirmatory test is opened.
 
 ## Scope
 
