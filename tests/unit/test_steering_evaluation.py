@@ -82,6 +82,38 @@ def test_steered_scoring_changes_candidate_preference() -> None:
     assert all(row["A"] > row["B"] for row in scores)
 
 
+def test_steered_scoring_accepts_precomputed_lengths() -> None:
+    """Cached lengths preserve the exact candidate scores."""
+    model = FakeSteerableModel()
+    arguments = (
+        model,
+        ["xx", "xxxx"],
+        [("A", "B"), ("A", "B")],
+        "blocks.5.hook_out",
+        torch.tensor([1.0, 0.0, 0.0]),
+        2.0,
+    )
+
+    uncached = score_prompts_with_steering(*arguments)
+    cached = score_prompts_with_steering(*arguments, prompt_lengths=[2, 4])
+
+    assert cached == uncached
+
+
+def test_steered_scoring_rejects_misaligned_lengths() -> None:
+    """A stale or incomplete length cache fails closed."""
+    with pytest.raises(ValueError, match="Prompt lengths"):
+        score_prompts_with_steering(
+            FakeSteerableModel(),
+            ["xx"],
+            [("A", "B")],
+            "blocks.5.hook_out",
+            torch.tensor([1.0, 0.0, 0.0]),
+            2.0,
+            prompt_lengths=[],
+        )
+
+
 def test_metrics_keep_phase2_eligibility_fixed() -> None:
     """Steering cannot improve its denominator by changing initial answers."""
     baseline = [prediction("1"), prediction("2", initial="B")]

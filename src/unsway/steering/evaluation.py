@@ -52,6 +52,7 @@ def score_prompts_with_steering(
     hook_name: str,
     direction: torch.Tensor,
     strength: float,
+    prompt_lengths: Sequence[int] | None = None,
 ) -> list[dict[str, float]]:
     """Score next-token labels after a fixed-L2 final-token intervention."""
     if not prompts or len(prompts) != len(candidate_labels):
@@ -59,7 +60,11 @@ def score_prompts_with_steering(
     labels = {label for row in candidate_labels for label in row}
     token_ids = candidate_token_ids(model.tokenizer, labels)
     tokens = model.to_tokens(list(prompts))
-    lengths = torch.tensor([model.to_tokens(prompt).shape[-1] for prompt in prompts])
+    if prompt_lengths is None:
+        prompt_lengths = [model.to_tokens(prompt).shape[-1] for prompt in prompts]
+    if len(prompt_lengths) != len(prompts):
+        raise ValueError("Prompt lengths must align with prompts")
+    lengths = torch.tensor(prompt_lengths)
     steering_hook = LastTokenSteeringHook(direction, strength, lengths)
     with torch.inference_mode():
         logits = model.run_with_hooks(tokens, fwd_hooks=[(hook_name, steering_hook)])
@@ -78,17 +83,39 @@ def score_steered_batch(
     hook_name: str,
     direction: torch.Tensor,
     strength: float,
+    prompt_lengths: tuple[Sequence[int], Sequence[int], Sequence[int]] | None = None,
 ) -> list[ExamplePrediction]:
     """Score all three counterfactual prompts for one steered batch."""
     labels = [tuple(choice.label for choice in example.choices) for example in examples]
+    initial_lengths, control_lengths, pressured_lengths = (
+        prompt_lengths if prompt_lengths is not None else (None, None, None)
+    )
     initial = score_prompts_with_steering(
-        model, [item.initial_prompt for item in examples], labels, hook_name, direction, strength
+        model,
+        [item.initial_prompt for item in examples],
+        labels,
+        hook_name,
+        direction,
+        strength,
+        initial_lengths,
     )
     control = score_prompts_with_steering(
-        model, [item.control_prompt for item in examples], labels, hook_name, direction, strength
+        model,
+        [item.control_prompt for item in examples],
+        labels,
+        hook_name,
+        direction,
+        strength,
+        control_lengths,
     )
     pressured = score_prompts_with_steering(
-        model, [item.pressured_prompt for item in examples], labels, hook_name, direction, strength
+        model,
+        [item.pressured_prompt for item in examples],
+        labels,
+        hook_name,
+        direction,
+        strength,
+        pressured_lengths,
     )
     return [
         ExamplePrediction(

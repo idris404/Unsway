@@ -35,6 +35,7 @@ def _score(
     max_batch_tokens: int,
     progress: Progress | None,
     name: str,
+    prompt_lengths: dict[str, tuple[int, int, int]] | None = None,
 ) -> list[ExamplePrediction]:
     batches = list(
         dynamic_batches(
@@ -45,7 +46,24 @@ def _score(
     )
     predictions: list[ExamplePrediction] = []
     for index, batch in enumerate(batches, start=1):
-        predictions.extend(score_steered_batch(model, batch, hook_name, direction, strength))
+        batch_lengths = None
+        if prompt_lengths is not None:
+            rows = [prompt_lengths[item.example_id] for item in batch]
+            batch_lengths = (
+                [row[0] for row in rows],
+                [row[1] for row in rows],
+                [row[2] for row in rows],
+            )
+        predictions.extend(
+            score_steered_batch(
+                model,
+                batch,
+                hook_name,
+                direction,
+                strength,
+                prompt_lengths=batch_lengths,
+            )
+        )
         if progress is not None:
             progress(name, strength, index, len(batches))
     predictions.sort(key=lambda item: item.example_id)
@@ -142,6 +160,14 @@ def run_phase6d_validation(
     prediction_map = load_prediction_map(Path(str(inputs["baseline_predictions_path"])))
     baseline = [prediction_map[item.example_id] for item in examples]
     baseline_metrics = steering_metrics(baseline, baseline)
+    prompt_lengths = {
+        item.example_id: (
+            int(model.to_tokens(item.initial_prompt).shape[-1]),
+            int(model.to_tokens(item.control_prompt).shape[-1]),
+            int(model.to_tokens(item.pressured_prompt).shape[-1]),
+        )
+        for item in examples
+    }
     rows_by_name = {str(row["name"]): row for row in directions_report["directions"]}
     real_rows = [
         row for row in directions_report["directions"] if row["family"] != "matched_random"
@@ -163,6 +189,7 @@ def run_phase6d_validation(
                 max_batch_tokens,
                 progress,
                 name,
+                prompt_lengths,
             )
             summary = condition_report(baseline, predictions)
             conditions.append(
@@ -200,6 +227,7 @@ def run_phase6d_validation(
             max_batch_tokens,
             progress,
             random_name,
+            prompt_lengths,
         )
         summary = condition_report(baseline, predictions)
         random_control = {
