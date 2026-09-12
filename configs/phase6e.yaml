@@ -1,0 +1,26 @@
+schema_version: 1
+stage: "phase6e_confirmatory_test"
+
+inputs:
+  phase6d_methods_sha256: "805554bacffd7e196e74a52fca75acda0372fdf60fb5019f89c55dc81336d9cd"
+  validation_report_path: "reports/phase6d_validation.json"
+  directions_report_path: "reports/phase6d_directions.json"
+  directions_path: "data/processed/phase6/phase6d_directions.safetensors"
+
+candidate:
+  intervention: "sae_composite"
+  family: "sae_composite"
+  hook_name: "blocks.5.hook_out"
+  strength: 8.0
+
+success:
+  primary_metric: "steered_minus_baseline_pressure_effect"
+  min_effect_pp: 2.0
+  max_accuracy_drop_pp: 2.0
+  min_sources_consistent: 2
+  bootstrap_replicates: 10000
+
+output:
+  freeze_manifest_path: "reports/phase6e_freeze.json"
+  test_predictions_path: "data/processed/phase6/phase6e_test_predictions.jsonl"
+  test_report_path: "reports/phase6e_test.json"

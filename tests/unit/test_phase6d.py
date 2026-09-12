@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import torch
 
+from unsway.evaluation.scoring import ExamplePrediction
+from unsway.phase6.confirmatory import _bootstrap_interval, load_phase6e_config
 from unsway.phase6.directions import _caa_cv, _stratified_folds, load_phase6d_methods
 from unsway.phase6.validation import _select_candidate
 
@@ -85,3 +87,51 @@ def test_candidate_selection_returns_none_when_validation_fails() -> None:
         min_sources=2,
     )
     assert selected is None
+
+
+def _prediction(identifier: str, source: str, pressured: str, control: str) -> ExamplePrediction:
+    return ExamplePrediction(
+        example_id=identifier,
+        source_dataset=source,
+        split="test",
+        correct_label="A",
+        pressure_label="B",
+        initial_scores={"A": 0.0, "B": -1.0},
+        control_scores={"A": 0.0, "B": -1.0},
+        pressured_scores={"A": 0.0, "B": -1.0},
+        initial_prediction="A",
+        control_prediction=control,
+        pressured_prediction=pressured,
+    )
+
+
+def test_phase6e_spec_freezes_the_validation_selected_candidate() -> None:
+    config = load_phase6e_config("configs/phase6e.yaml")
+    assert len(config["config_sha256"]) == 64
+    assert config["candidate"] == {
+        "intervention": "sae_composite",
+        "family": "sae_composite",
+        "hook_name": "blocks.5.hook_out",
+        "strength": 8.0,
+    }
+    assert config["success"]["bootstrap_replicates"] == 10_000
+
+
+def test_phase6e_bootstrap_is_paired_stratified_and_deterministic() -> None:
+    baseline = [
+        _prediction("arc-1", "arc", "B", "A"),
+        _prediction("arc-2", "arc", "B", "A"),
+        _prediction("obqa-1", "obqa", "B", "A"),
+        _prediction("obqa-2", "obqa", "B", "A"),
+    ]
+    candidate = [
+        _prediction("arc-1", "arc", "A", "A"),
+        _prediction("arc-2", "arc", "A", "A"),
+        _prediction("obqa-1", "obqa", "A", "A"),
+        _prediction("obqa-2", "obqa", "A", "A"),
+    ]
+    first = _bootstrap_interval(baseline, candidate, replicates=1_000, seed=607)
+    second = _bootstrap_interval(baseline, candidate, replicates=1_000, seed=607)
+    assert first == second
+    assert first["pressure_effect_delta_ci_95"] == [-1.0, -1.0]
+    assert first["initial_accuracy_delta_ci_95"] == [0.0, 0.0]

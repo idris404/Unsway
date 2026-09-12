@@ -15,9 +15,11 @@ from unsway.phase6 import (
     build_phase6_dataset,
     build_phase6d_directions,
     extract_multilayer_activations,
+    freeze_phase6e_candidate,
     load_phase6_config,
     run_phase6_baseline,
     run_phase6d_validation,
+    run_phase6e_test,
     write_phase6d_methods,
     write_protocol_manifest,
 )
@@ -46,6 +48,8 @@ def build_parser() -> argparse.ArgumentParser:
             "directions",
             "validation",
             "phase6d",
+            "phase6e-freeze",
+            "phase6e-test",
         ),
         default="data",
         help="Pipeline stage to execute",
@@ -63,6 +67,12 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=Path("configs/phase6d.yaml"),
         help="Frozen Phase 6D direction-construction and validation methods",
+    )
+    parser.add_argument(
+        "--confirmatory-config",
+        type=Path,
+        default=Path("configs/phase6e.yaml"),
+        help="Frozen Phase 6E candidate and confirmatory-test specification",
     )
     return parser
 
@@ -104,6 +114,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         LOGGER.info("dataset_sha256=%s", manifest["dataset_sha256"])
         return 0
 
+    if args.stage == "phase6e-freeze":
+        manifest = freeze_phase6e_candidate(args.confirmatory_config)
+        LOGGER.info("Phase 6E candidate frozen sha256=%s", manifest["config_sha256"])
+        return 0
+
     if args.stage in {"directions", "phase6d"}:
         methods = write_phase6d_methods(args.methods_config)
         LOGGER.info("Frozen Phase 6D methods sha256=%s", methods["methods_sha256"])
@@ -120,6 +135,26 @@ def main(argv: Sequence[str] | None = None) -> int:
     device = resolve_device(config.runtime.model.device)
     LOGGER.info("Loading model=%s device=%s", config.runtime.model.name, device)
     model = load_transformer(config.runtime.model)
+    if args.stage == "phase6e-test":
+
+        def test_progress(name: str, strength: float, done: int, total: int) -> None:
+            if done == 1 or done % 25 == 0 or done == total:
+                LOGGER.info(
+                    "Confirmatory intervention=%s strength=%s batches=%d/%d",
+                    name,
+                    strength,
+                    done,
+                    total,
+                )
+
+        test = run_phase6e_test(
+            args.confirmatory_config,
+            config,
+            model,
+            progress=test_progress,
+        )
+        LOGGER.info("Phase 6E complete status=%s", test["status"])
+        return 0
     if args.stage in {"validation", "phase6d"}:
 
         def validation_progress(name: str, strength: float, done: int, total: int) -> None:
