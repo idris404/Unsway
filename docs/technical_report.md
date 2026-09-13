@@ -122,6 +122,28 @@ The correct interpretation is **causal effect inconclusive**, not “steering so
 sycophancy.” The one-trial reduction is compatible with no effect, and the primary SAE
 direction failed its validation criterion.
 
+### Pre-registered Phase 6 extension
+
+Phase 6 tested whether a distributed direction could improve on that negative
+single-unit result. It searched all 12 residual layers using train-only activations,
+compared fixed direction families and doses on validation, and froze one candidate
+before opening a fully disjoint 2,400-example replacement holdout.
+
+Validation selected an eight-feature SAE composite at layer 5 and L2 dose `8.0`. On
+the one-shot holdout test, the registered pressure-specific difference-in-differences
+fell from 3.35% to 0.37%, a paired change of -2.98 percentage points. A
+source-stratified paired bootstrap with 10,000 replicates gave a 95% interval of
+[-4.66, -1.42]. Initial accuracy did not change, all three source families improved,
+and the matched random direction instead increased the pressure effect by 2.98 points
+(95% bootstrap interval [+0.76, +5.29]). The pre-registered Phase 6 success guardrails
+therefore passed.
+
+This positive extension does not erase the original negative result: feature 4825 and
+neuron 144 remain insufficient individually. It supports causal control by a specific
+distributed direction in this setup. The high-dose composite also suppresses the
+advocated label in neutral controls, so it is not evidence for a clean, uniquely
+identified “sycophancy circuit.”
+
 ## 4. What the negative result teaches us
 
 The result separates three claims that are often conflated:
@@ -140,13 +162,16 @@ insufficient statistical power on the fixed eligible test population.
 - GPT-2 small is a 124M-parameter pretrained base model, not a modern instruction- or
   preference-tuned assistant ([Radford et al., 2019](https://cdn.openai.com/better-language-models/language-models.pdf)).
 - The task uses constrained multiple-choice label scoring rather than open-ended dialog.
-- Only one layer, one token position, one SAE seed and one main feature were tested.
+- The initial experiment tested one layer, one token position, one SAE seed and one
+  main feature; Phase 6 broadened layers and directions but retained the final-token
+  intervention position and the same small base model.
 - The feature label `sycophancy_high` is behavioral shorthand, not a semantic proof of
   monosemanticity.
 - Approximate confidence intervals quantify sampling uncertainty but do not correct for
   every modeling and feature-selection choice.
-- The random control was configured to match the SAE-selected test dose. Because the
-  SAE received no dose, the control was not run on held-out test.
+- The initial Phase 4 random control was not run because the SAE received no selected
+  dose. Phase 6 corrected this limitation by running a matched random control for the
+  distributed candidate on the replacement holdout.
 - Source-level rates vary substantially, limiting broad generalization.
 
 ## 6. Reproducibility
@@ -168,7 +193,9 @@ have separate production and smoke configurations documented in their phase repo
 
 Unsway demonstrates an end-to-end research workflow: operationalize a behavioral
 hypothesis, measure it against a paired control, extract and decompose activations,
-select features without test leakage, intervene causally and report a negative result
-without overstating it. The strongest finding is the controlled behavioral pressure
-effect. The mechanistic signals are predictive, while reliable causal control remains
-an open question for broader layer/position searches and multi-feature interventions.
+select features without test leakage, intervene causally, preserve an initial negative
+result and test a pre-registered extension. The behavioral pressure effect is robust.
+Individual mechanistic signals are predictive but were not reliable controls; the
+distributed SAE composite produced a replicated, direction-specific causal effect in
+the replacement holdout. Whether that result transfers to modern assistants,
+open-ended answers or other intervention positions remains an open question.

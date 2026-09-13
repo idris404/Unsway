@@ -1,0 +1,22 @@
+{
+  "candidate": {
+    "family": "sae_composite",
+    "hook_name": "blocks.5.hook_out",
+    "intervention": "sae_composite",
+    "strength": 8.0
+  },
+  "config_sha256": "51802a09a1001145cae35dc8ba74b16758c2b3f62fcff42e1a65205f71203504",
+  "phase6d_directions_report_sha256": "5cd45bfbc80ef8770807e9f22d384910ec3c2980d40d585f14993ba6f5199e13",
+  "phase6d_directions_sha256": "48c9631ac0a91362f673bb45ced40a5e91724caeadb0d692b96844dad4b037fc",
+  "phase6d_validation_sha256": "6febe30813c46d9a35de87cde5b94ce53521ea9b3c106f1df4fb734c69aca97c",
+  "schema_version": 1,
+  "status": "frozen_before_confirmatory_test",
+  "success": {
+    "bootstrap_replicates": 10000,
+    "max_accuracy_drop_pp": 2.0,
+    "min_effect_pp": 2.0,
+    "min_sources_consistent": 2,
+    "primary_metric": "steered_minus_baseline_pressure_effect"
+  },
+  "test_prompts_scored": false
+}

@@ -111,7 +111,7 @@ uv run unsway-phase5 --config configs/phase5.yaml
 
 Output: [`reports/phase5_summary.json`](../reports/phase5_summary.json).
 
-## Phase 6 — fresh-holdout extension (in progress)
+## Phase 6 — fresh-holdout extension (complete)
 
 Phase 6 tests whether distributed contrastive or multi-feature directions can improve
 on the inconclusive single-direction result. The Phase 4 test is explicitly treated as
@@ -193,3 +193,46 @@ zero test examples and verified the replacement protocol, dataset and initial-pr
 checksums before running. The compact production summary is versioned in
 [`phase6c_outcome.json`](../reports/phase6c_outcome.json); large tensor artifacts remain
 outside Git.
+
+## Phase 6D — train-only directions and validation selection
+
+The production run reconstructed the checksum-pinned Phase 3 SAE, built two
+cross-validated CAA directions from labelled train examples, and compared five real
+direction families over the five frozen positive doses. Prompt lengths were cached once
+to remove redundant tokenization; this optimization leaves examples, batches, logits,
+metrics and guardrails unchanged.
+
+On validation, the `sae_composite` direction at `blocks.5.hook_out` and L2 dose `8.0`
+reduced the registered pressure effect by 3.23 percentage points, preserved initial
+accuracy and improved all three sources. It therefore became the sole frozen
+confirmatory candidate. The replacement test pressure and control prompts were still
+unopened at this decision point. The validation report SHA-256 is
+`6febe30813c46d9a35de87cde5b94ce53521ea9b3c106f1df4fb734c69aca97c`.
+
+## Phase 6E — one-shot replacement-holdout confirmation
+
+Before test access, the candidate, dose, success guardrails, validation hash and
+direction artifact hashes were bound in
+[`phase6e_freeze.json`](../reports/phase6e_freeze.json). The test runner reproduced all
+2,400 frozen initial decisions, then scored only the selected composite and its matched
+random control. No further model or dose selection was performed on test.
+
+The unsteered holdout had 537 fixed eligible trials and a 3.35-point pressure effect.
+The SAE composite reduced this to 0.37 points, a paired change of -2.98 points. The
+source-stratified paired-bootstrap 95% interval from 10,000 replicates was -4.66 to -1.42
+points. Initial accuracy remained 22.375%, baseline-eligible retention remained 100%,
+and all three sources improved: AI2 ARC -1.61 points, CommonsenseQA -3.95, and
+OpenBookQA -3.52. The registered status is `confirmatory_effect_replicated`.
+
+The matched random control moved in the opposite direction: +2.98 pressure-effect
+points (bootstrap 95% CI +0.76 to +5.29), with all three source deltas positive. This
+strengthens the interpretation that the selected direction matters rather than the
+result arising from adding any vector of the same norm.
+
+The result remains scoped. At dose 8, the composite reduced the pressured target rate
+from 27.93% to 0.37%, but also reduced the control target rate from 24.58% to 0%. The
+difference-in-differences isolates a statistically supported pressure-specific
+improvement, while the larger shared shift shows that the intervention broadly
+suppresses the pressured answer label. Consequently this is evidence for a causal
+steering effect in GPT-2 small, not proof of a uniquely identified mechanism or a
+general solution to sycophancy.

@@ -4,13 +4,11 @@ Unsway studies a narrow form of sycophancy: whether GPT-2 small abandons a corre
 multiple-choice answer after a user confidently argues for a specific wrong answer.
 
 The repository follows the full experiment from behavioral measurement to sparse
-feature discovery and activation steering. The final causal result is inconclusive.
-A pre-registered Phase 6 extension is testing distributed steering directions. Its
-first fresh holdout stopped at the 300-example eligibility guardrail with 299 initially
-correct answers; pressure/control test prompts remained unopened. Phase 6C now freezes
-a larger, fully disjoint replacement holdout. Its initial-only baseline passed with 537
-correct answers out of 2,400. The gate then unlocked extraction of 4,800 train/validation
-examples across all 12 residual layers; replacement pressure/control prompts remain unopened.
+feature discovery and activation steering. The original single-neuron causal result was
+inconclusive. A pre-registered Phase 6 extension then tested distributed directions. Its
+first holdout stopped at the eligibility guardrail, but a larger disjoint replacement
+holdout passed with 537 initially correct answers out of 2,400. The final one-shot test
+replicated the selected pressure-specific steering effect.
 
 ## Main result
 
@@ -94,9 +92,20 @@ Phase 6D uses `notebooks/phase6d_colab.ipynb` to deterministically rebuild its p
 construct directions from train data only, select doses on validation only, and download the
 complete result bundle before any confirmatory test is opened.
 
+Phase 6D selected the eight-feature SAE composite at layer 5 and L2 dose `8.0`. The
+one-shot Phase 6E evaluation replicated the pre-registered effect on the disjoint
+2,400-example replacement holdout: the pressure-specific difference-in-differences fell
+by 2.98 percentage points (source-stratified paired-bootstrap 95% CI: -4.66 to -1.42),
+with no initial-accuracy loss and improvement in all three source families. Its matched
+random direction instead increased the pressure effect by 2.98 points. Exact frozen
+artifacts are in [`phase6e_freeze.json`](reports/phase6e_freeze.json) and
+[`phase6e_test.json`](reports/phase6e_test.json).
+
 ## Scope
 
 Unsway uses a small pretrained completion model and constrained answer scoring. Its
 results should not be generalized directly to modern instruction-tuned assistants or
-open-ended conversations. The project is best read as a reproducible case study in
-behavioral evaluation and causal interpretability, including a negative result.
+open-ended conversations. The selected high-dose composite also broadly suppresses the
+pressured answer label in both pressure and control prompts. The project is best read as
+a reproducible case study in behavioral evaluation and causal interpretability, with
+both negative and positive results.
