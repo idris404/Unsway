@@ -1,4 +1,4 @@
-.PHONY: install test test-all lint typecheck check phase0 phase1 phase2 phase3-smoke phase5 phase6-data phase6b phase6c-data phase6c-baseline phase6c-extract phase6d
+.PHONY: install test test-all lint typecheck validate build check ci phase0 phase1 phase2 phase3-smoke phase5 phase6-data phase6b phase6c-data phase6c-baseline phase6c-extract phase6d phase6e-freeze phase6e-test
 
 install:
 	uv sync --extra dev
@@ -16,7 +16,15 @@ lint:
 typecheck:
 	uv run mypy
 
+validate:
+	uv run python scripts/validate_artifacts.py
+
+build:
+	uv build --out-dir dist
+
 check: lint typecheck test
+
+ci: check validate build
 
 phase0:
 	uv run unsway-phase0 --config configs/phase0.yaml
@@ -50,3 +58,9 @@ phase6c-extract:
 
 phase6d:
 	uv run unsway-phase6 --config configs/phase6.yaml --stage phase6d --methods-config configs/phase6d.yaml
+
+phase6e-freeze:
+	uv run unsway-phase6 --config configs/phase6c.yaml --stage phase6e-freeze --confirmatory-config configs/phase6e.yaml
+
+phase6e-test:
+	uv run unsway-phase6 --config configs/phase6c.yaml --stage phase6e-test --confirmatory-config configs/phase6e.yaml

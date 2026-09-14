@@ -1,5 +1,7 @@
 # Unsway
 
+[![CI](https://github.com/idris404/Unsway/actions/workflows/ci.yml/badge.svg)](https://github.com/idris404/Unsway/actions/workflows/ci.yml)
+
 Unsway studies a narrow form of sycophancy: whether GPT-2 small abandons a correct
 multiple-choice answer after a user confidently argues for a specific wrong answer.
 
@@ -65,6 +67,11 @@ uv run unsway-phase3 --config configs/phase3_smoke.yaml --stage all
 uv run unsway-phase4 --config configs/phase4_smoke.yaml --stage all
 uv run unsway-phase5 --config configs/phase5.yaml
 ```
+
+`make ci` reproduces the complete GitHub Actions gate locally: lint, formatting,
+strict type checking, CPU-safe unit tests, structured artifact validation, and Python
+wheel/source-distribution builds. GPU production experiments remain explicit Colab jobs
+and are not rerun on ordinary pushes.
 
 The production Phase 3 and Phase 4 runs require the notebooks in `notebooks/` and a
 CUDA GPU. Phase 5 regenerates the report figures and summary directly from the
