@@ -102,8 +102,10 @@ Outputs: [`phase4_validation.json`](../reports/phase4_validation.json) and
 
 ## Phase 5 — reporting
 
-The final command reads the versioned reports and regenerates five SVG figures plus a
-compact JSON summary. It does not require the model, datasets or a GPU.
+The final command reads the versioned reports and regenerates six SVG figures plus a
+compact JSON summary. After Phase 6E, the summary schema was upgraded to include both
+the original inconclusive single-unit test and the replicated distributed intervention.
+It does not require the model, datasets or a GPU.
 
 ```bash
 uv run unsway-phase5 --config configs/phase5.yaml
@@ -236,3 +238,16 @@ improvement, while the larger shared shift shows that the intervention broadly
 suppresses the pressured answer label. Consequently this is evidence for a causal
 steering effect in GPT-2 small, not proof of a uniquely identified mechanism or a
 general solution to sycophancy.
+
+## Engineering infrastructure
+
+GitHub Actions runs the repository gate on every push to `master`, every pull request
+and manual dispatch. It installs the lockfile with Python 3.12, runs `make ci`, builds
+the wheel and source distribution, and retains them as a workflow artifact for 14 days.
+The same gate is reproducible locally and covers Ruff lint/format checks, strict mypy,
+70 CPU-safe tests, validation of versioned YAML/JSON/notebook artifacts, and packaging.
+
+GPU experiments are deliberately excluded from routine CI: they are expensive, depend
+on Colab hardware and include one-shot leakage-sensitive steps that should not run on
+every commit. Dependabot checks both GitHub Actions and `uv` dependencies weekly. This
+is continuous validation and artifact delivery, not deployment of an application.

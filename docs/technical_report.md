@@ -13,8 +13,14 @@ feature with validation AUROC 0.820, but a raw residual neuron reached 0.830. In
 leakage-safe causal experiment, the SAE feature did not reduce the validation behavior
 at any positive dose. The selected raw-neuron intervention reduced the held-out test
 rate from 31.25% to 30.56%, a one-trial change whose confidence interval includes zero.
-The study therefore establishes a behavioral effect and predictive internal signals,
-but not a reliable causal steering effect.
+That original single-unit result was inconclusive. A pre-registered extension then
+selected an eight-feature SAE composite using train and validation data before opening
+a disjoint 2,400-example holdout. The one-shot confirmatory intervention reduced the
+pressure-specific effect by 2.98 percentage points (source-stratified bootstrap 95%
+CI: -4.66 to -1.42), with unchanged initial accuracy and improvement in all three
+source families. Unsway therefore establishes a narrow distributed causal steering
+effect while retaining the negative single-unit result and important specificity
+limitations.
 
 ## 1. Research question
 
@@ -118,9 +124,9 @@ effect stayed at +8.33 points.
 
 ![Held-out steering](figures/heldout_steering.svg)
 
-The correct interpretation is **causal effect inconclusive**, not “steering solved
-sycophancy.” The one-trial reduction is compatible with no effect, and the primary SAE
-direction failed its validation criterion.
+The correct interpretation of this Phase 4 test is **causal effect inconclusive**, not
+“steering solved sycophancy.” The one-trial reduction is compatible with no effect, and
+the primary SAE direction failed its validation criterion.
 
 ### Pre-registered Phase 6 extension
 
@@ -138,13 +144,15 @@ and the matched random direction instead increased the pressure effect by 2.98 p
 (95% bootstrap interval [+0.76, +5.29]). The pre-registered Phase 6 success guardrails
 therefore passed.
 
+![Phase 6 confirmatory result](figures/phase6_confirmatory.svg)
+
 This positive extension does not erase the original negative result: feature 4825 and
 neuron 144 remain insufficient individually. It supports causal control by a specific
 distributed direction in this setup. The high-dose composite also suppresses the
 advocated label in neutral controls, so it is not evidence for a clean, uniquely
 identified “sycophancy circuit.”
 
-## 4. What the negative result teaches us
+## 4. What the negative and positive results teach us
 
 The result separates three claims that are often conflated:
 
@@ -152,10 +160,12 @@ The result separates three claims that are often conflated:
 2. An internal activation predicts that behavior.
 3. Editing that activation reliably controls the behavior.
 
-Unsway supports claims 1 and 2 but does not establish claim 3. Possible explanations
-include distributed or nonlinear causal structure, feature entanglement, an unsuitable
-intervention position, a direction that acts as a readout rather than a mechanism, or
-insufficient statistical power on the fixed eligible test population.
+The original Phase 4 experiment supports claims 1 and 2 but does not establish claim 3
+for feature 4825 or neuron 144. Phase 6 provides evidence for claim 3 for one frozen
+distributed SAE composite: its pressure-specific effect replicated on the disjoint
+holdout and separated from the matched random control. These findings are compatible
+with a distributed causal structure, but the broad suppression of the advocated label
+means the composite is not a uniquely identified or semantically clean mechanism.
 
 ## 5. Limitations
 
@@ -181,13 +191,22 @@ weights are checksum-verified and backed up outside Git.
 
 ```bash
 uv sync --extra dev
-make check
+make ci
 uv run unsway-phase5 --config configs/phase5.yaml
 ```
 
-The command regenerates every figure in `docs/figures/` and
-`reports/phase5_summary.json` without loading GPT-2 or requiring a GPU. Earlier phases
-have separate production and smoke configurations documented in their phase reports.
+`make ci` runs the same deterministic gate used by GitHub Actions: Ruff linting and
+format checks, strict mypy type checking, CPU-safe unit tests, structured validation of
+all versioned YAML/JSON/notebook artifacts, and Python wheel/source-distribution builds.
+At the current repository revision the suite contains 70 passing CPU tests; the
+real-model integration test is intentionally deselected from ordinary CI.
+
+The reporting command regenerates all six figures in `docs/figures/` and the consolidated
+`reports/phase5_summary.json` without loading GPT-2 or requiring a GPU. GPU production
+experiments remain explicit Colab runs because they require model weights, accelerator
+time and leakage-sensitive scientific decisions. Successful CI runs publish the built
+Python distributions as short-lived workflow artifacts; they do not deploy a service or
+publish to PyPI.
 
 ## 7. Conclusion
 

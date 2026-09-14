@@ -49,7 +49,7 @@ def test_phase5_config_file_is_versioned() -> None:
 
 
 def test_phase5_build_generates_complete_artifact_set(tmp_path: Path) -> None:
-    """The versioned experiment reports render into five figures and a summary."""
+    """The versioned experiment reports render into six figures and a summary."""
     config = load_phase5_config("configs/phase5.yaml")
     config = replace(
         config,
@@ -62,7 +62,8 @@ def test_phase5_build_generates_complete_artifact_set(tmp_path: Path) -> None:
     summary = build_phase5_artifacts(config)
 
     figures = sorted((tmp_path / "figures").glob("*.svg"))
-    assert len(figures) == 5
+    assert len(figures) == 6
     assert all(figure.read_text(encoding="utf-8").startswith("<svg") for figure in figures)
-    assert summary["conclusion"] == "causal_effect_inconclusive"
+    assert summary["conclusion"] == "distributed_causal_effect_replicated"
+    assert summary["phase6_confirmatory"]["status"] == "confirmatory_effect_replicated"
     assert (tmp_path / "phase5_summary.json").is_file()

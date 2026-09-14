@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+<title id="title">Phase 6 confirmatory result</title>
+<desc id="desc">Unsway research figure: Phase 6 confirmatory result</desc>
+<rect width="960" height="560" fill="#ffffff"/>
+<style>text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}</style>
+<text x="40.0" y="42.0" font-size="24" font-weight="700" text-anchor="start" fill="#172033">Phase 6 confirmatory result</text>
+<text x="40.0" y="70.0" font-size="14" font-weight="400" text-anchor="start" fill="#5b6577">Pressure-specific effect on 537 fixed eligible holdout trials</text>
+<text x="24" y="295.0" font-size="14" font-weight="600" text-anchor="middle" fill="#172033" transform="rotate(-90 24 295.0)">Rate (%)</text>
+<line x1="92.0" y1="478.0" x2="920.0" y2="478.0" stroke="#dbe3ee"/>
+<text x="80.0" y="483.0" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">0%</text>
+<line x1="92.0" y1="404.8" x2="920.0" y2="404.8" stroke="#dbe3ee"/>
+<text x="80.0" y="409.8" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">2%</text>
+<line x1="92.0" y1="331.6" x2="920.0" y2="331.6" stroke="#dbe3ee"/>
+<text x="80.0" y="336.6" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">3%</text>
+<line x1="92.0" y1="258.4" x2="920.0" y2="258.4" stroke="#dbe3ee"/>
+<text x="80.0" y="263.4" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">5%</text>
+<line x1="92.0" y1="185.2" x2="920.0" y2="185.2" stroke="#dbe3ee"/>
+<text x="80.0" y="190.2" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">6%</text>
+<line x1="92.0" y1="112.0" x2="920.0" y2="112.0" stroke="#dbe3ee"/>
+<text x="80.0" y="117.0" font-size="12" font-weight="400" text-anchor="end" fill="#5b6577">8%</text>
+<rect x="212.4" y="324.6" width="35.3" height="153.4" rx="3" fill="#7c3aed"/>
+<text x="230.0" y="316.6" font-size="11" font-weight="600" text-anchor="middle" fill="#172033">3.4%</text>
+<text x="230.0" y="506.0" font-size="12" font-weight="400" text-anchor="middle" fill="#5b6577">Baseline</text>
+<rect x="488.4" y="461.0" width="35.3" height="17.0" rx="3" fill="#7c3aed"/>
+<text x="506.0" y="453.0" font-size="11" font-weight="600" text-anchor="middle" fill="#172033">0.4%</text>
+<text x="506.0" y="506.0" font-size="12" font-weight="400" text-anchor="middle" fill="#5b6577">SAE composite</text>
+<rect x="764.4" y="188.3" width="35.3" height="289.7" rx="3" fill="#7c3aed"/>
+<text x="782.0" y="180.3" font-size="11" font-weight="600" text-anchor="middle" fill="#172033">6.3%</text>
+<text x="782.0" y="506.0" font-size="12" font-weight="400" text-anchor="middle" fill="#5b6577">Matched random</text>
+<rect x="780.0" y="88" width="12" height="12" rx="2" fill="#7c3aed"/>
+<text x="798.0" y="99.0" font-size="12" font-weight="400" text-anchor="start" fill="#172033">Pressure effect</text>
+<text x="40.0" y="532.0" font-size="11" font-weight="400" text-anchor="start" fill="#5b6577">Source: reports/phase6e_test.json · SAE delta -2.98 pp (stratified bootstrap 95% CI -4.66 to -1.42)</text>
+</svg>

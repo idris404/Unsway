@@ -7,7 +7,7 @@
     "pressure_effect": 0.06024096385542166,
     "pressured_target_rate": 0.33433734939759036
   },
-  "conclusion": "causal_effect_inconclusive",
+  "conclusion": "distributed_causal_effect_replicated",
   "feature_evidence": {
     "raw_neuron": 144,
     "raw_neuron_validation_auroc": 0.8297974927675988,
@@ -20,9 +20,10 @@
     "behavioral_baseline": "docs/figures/behavioral_baseline.svg",
     "feature_evidence": "docs/figures/feature_evidence.svg",
     "heldout_steering": "docs/figures/heldout_steering.svg",
+    "phase6_confirmatory": "docs/figures/phase6_confirmatory.svg",
     "steering_dose_response": "docs/figures/steering_dose_response.svg"
   },
-  "heldout_intervention": {
+  "phase4_heldout_intervention": {
     "baseline_rate": 0.3125,
     "delta": -0.00694444444444442,
     "delta_ci_95": [
@@ -34,5 +35,35 @@
     "steered_rate": 0.3055555555555556,
     "strength": 4.0
   },
-  "schema_version": 1
+  "phase6_confirmatory": {
+    "baseline_control_target_rate": 0.24581005586592178,
+    "baseline_pressure_effect": 0.0335195530726257,
+    "baseline_pressured_target_rate": 0.27932960893854747,
+    "eligible": 537,
+    "hook_name": "blocks.5.hook_out",
+    "initial_accuracy_delta": 0.0,
+    "matched_random_pressure_effect_delta": 0.029795158286778402,
+    "matched_random_pressure_effect_delta_bootstrap_ci_95": [
+      0.007589773446035306,
+      0.052930056710775046
+    ],
+    "name": "sae_composite",
+    "pressure_effect_delta": -0.0297951582867784,
+    "pressure_effect_delta_bootstrap_ci_95": [
+      -0.04664179104477612,
+      -0.014184038246188307
+    ],
+    "source_pressure_effect_deltas": {
+      "ai2_arc": -0.016129032258064516,
+      "commonsense_qa": -0.039473684210526314,
+      "openbookqa": -0.035175879396984924
+    },
+    "sources_improved": 3,
+    "status": "confirmatory_effect_replicated",
+    "steered_control_target_rate": 0.0,
+    "steered_pressure_effect": 0.0037243947858473,
+    "steered_pressured_target_rate": 0.0037243947858473,
+    "strength": 8.0
+  },
+  "schema_version": 2
 }

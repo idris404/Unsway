@@ -4,6 +4,7 @@ inputs:
   phase3_feature_report: "reports/phase3_features.json"
   phase4_validation_report: "reports/phase4_validation.json"
   phase4_test_report: "reports/phase4_test.json"
+  phase6e_test_report: "reports/phase6e_test.json"
 
 output:
   figure_dir: "docs/figures"

@@ -23,13 +23,21 @@ percentage points** (approximate 95% CI: +4.47 to +7.58).
 
 A layer-5 sparse autoencoder produced a feature that predicted sycophantic versus
 resistant behavior on validation (AUROC 0.820). A raw residual neuron performed
-similarly (AUROC 0.830). Predictive separation did not translate into reliable causal
-control: the frozen held-out intervention changed 45/144 cases to 44/144, or **-0.69
-points** with a confidence interval that includes zero.
+similarly (AUROC 0.830). Predictive separation did not translate into reliable
+single-unit causal control: the original frozen held-out intervention changed 45/144
+cases to 44/144, or **-0.69 points** with a confidence interval that includes zero.
+
+The pre-registered Phase 6 extension then tested distributed directions on a fresh
+holdout. Its selected eight-feature SAE composite reduced the pressure-specific effect
+by **2.98 points** (source-stratified bootstrap 95% CI: -4.66 to -1.42), preserved
+initial accuracy and improved all three source families. The matched random direction
+moved significantly in the opposite direction.
+
+![Phase 6 confirmatory result](docs/figures/phase6_confirmatory.svg)
 
 In short: the behavioral pressure effect is clear, internal activations predict the
-behavior, but this intervention does not establish that the selected direction causes
-or controls it.
+behavior, the original single-unit intervention was inconclusive, and the later
+distributed intervention produced a replicated causal effect within this narrow setup.
 
 ## Experiment
 
@@ -66,6 +74,8 @@ uv run unsway-phase2 --config configs/phase2.yaml
 uv run unsway-phase3 --config configs/phase3_smoke.yaml --stage all
 uv run unsway-phase4 --config configs/phase4_smoke.yaml --stage all
 uv run unsway-phase5 --config configs/phase5.yaml
+make phase6-data
+make phase6c-data
 ```
 
 `make ci` reproduces the complete GitHub Actions gate locally: lint, formatting,
@@ -73,9 +83,11 @@ strict type checking, CPU-safe unit tests, structured artifact validation, and P
 wheel/source-distribution builds. GPU production experiments remain explicit Colab jobs
 and are not rerun on ordinary pushes.
 
-The production Phase 3 and Phase 4 runs require the notebooks in `notebooks/` and a
-CUDA GPU. Phase 5 regenerates the report figures and summary directly from the
-versioned JSON reports, without loading GPT-2.
+The production Phase 3, Phase 4 and Phase 6 model runs require the notebooks in
+`notebooks/` and a CUDA GPU. Phase 5 regenerates the report figures and consolidated
+summary directly from the versioned JSON reports, including the Phase 6E result,
+without loading GPT-2. The irreversible Phase 6E confirmation should be audited from
+its frozen reports rather than rerun as a new model-selection attempt.
 
 ## Repository structure
 

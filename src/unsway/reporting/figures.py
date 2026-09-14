@@ -234,6 +234,7 @@ def build_phase5_artifacts(config: Phase5Config) -> dict[str, Any]:
     features = _load(config.inputs.phase3_feature_report)
     validation = _load(config.inputs.phase4_validation_report)
     test = _load(config.inputs.phase4_test_report)
+    phase6e = _load(config.inputs.phase6e_test_report)
     width, height = config.style.width, config.style.height
     overall = phase2["metrics"]["overall"]
     by_source = phase2["metrics"]["by_source"]
@@ -246,6 +247,7 @@ def build_phase5_artifacts(config: Phase5Config) -> dict[str, Any]:
         "feature_evidence": output / "feature_evidence.svg",
         "steering_dose_response": output / "steering_dose_response.svg",
         "heldout_steering": output / "heldout_steering.svg",
+        "phase6_confirmatory": output / "phase6_confirmatory.svg",
     }
     _write(
         figures["behavioral_baseline"],
@@ -353,9 +355,38 @@ def build_phase5_artifacts(config: Phase5Config) -> dict[str, Any]:
             ),
         ),
     )
+    phase6_baseline = phase6e["baseline"]
+    phase6_candidate = phase6e["candidate"]
+    phase6_random = phase6e["matched_random_control"]
+    _write(
+        figures["phase6_confirmatory"],
+        grouped_bar_svg(
+            "Phase 6 confirmatory result",
+            "Pressure-specific effect on 537 fixed eligible holdout trials",
+            ["Baseline", "SAE composite", "Matched random"],
+            [
+                (
+                    "Pressure effect",
+                    [
+                        float(phase6_baseline["pressure_effect"]) * 100,
+                        float(phase6_candidate["metrics"]["pressure_effect"]) * 100,
+                        float(phase6_random["metrics"]["pressure_effect"]) * 100,
+                    ],
+                    COLORS["purple"],
+                )
+            ],
+            width=width,
+            height=height,
+            y_max=8,
+            caption=(
+                "Source: reports/phase6e_test.json · SAE delta -2.98 pp "
+                "(stratified bootstrap 95% CI -4.66 to -1.42)"
+            ),
+        ),
+    )
     summary = {
-        "schema_version": 1,
-        "conclusion": "causal_effect_inconclusive",
+        "schema_version": 2,
+        "conclusion": "distributed_causal_effect_replicated",
         "behavioral_baseline": {
             "examples": int(overall["total_trials"]),
             "eligible": int(overall["eligible_trials"]),
@@ -375,7 +406,7 @@ def build_phase5_artifacts(config: Phase5Config) -> dict[str, Any]:
                 training["history"][-1]["validation"]["explained_variance"]
             ),
         },
-        "heldout_intervention": {
+        "phase4_heldout_intervention": {
             "name": str(steered["intervention"]),
             "strength": float(steered["strength"]),
             "eligible": int(test_baseline["fixed_eligible_trials"]),
@@ -383,6 +414,38 @@ def build_phase5_artifacts(config: Phase5Config) -> dict[str, Any]:
             "steered_rate": float(steered["metrics"]["pressured_target_rate"]),
             "delta": float(steered["delta"]["pressured_target_rate"]),
             "delta_ci_95": list(steered["delta"]["pressured_target_rate_ci_95"]),
+        },
+        "phase6_confirmatory": {
+            "status": str(phase6e["status"]),
+            "name": str(phase6_candidate["intervention"]),
+            "hook_name": str(phase6_candidate["hook_name"]),
+            "strength": float(phase6_candidate["strength"]),
+            "eligible": int(phase6_baseline["fixed_eligible_trials"]),
+            "baseline_pressure_effect": float(phase6_baseline["pressure_effect"]),
+            "steered_pressure_effect": float(phase6_candidate["metrics"]["pressure_effect"]),
+            "pressure_effect_delta": float(phase6_candidate["delta"]["pressure_effect"]),
+            "pressure_effect_delta_bootstrap_ci_95": list(
+                phase6_candidate["bootstrap"]["pressure_effect_delta_ci_95"]
+            ),
+            "initial_accuracy_delta": float(phase6_candidate["delta"]["initial_accuracy"]),
+            "sources_improved": int(phase6e["sources_improved"]),
+            "source_pressure_effect_deltas": dict(
+                phase6_candidate["source_pressure_effect_deltas"]
+            ),
+            "matched_random_pressure_effect_delta": float(
+                phase6_random["delta"]["pressure_effect"]
+            ),
+            "matched_random_pressure_effect_delta_bootstrap_ci_95": list(
+                phase6_random["bootstrap"]["pressure_effect_delta_ci_95"]
+            ),
+            "baseline_pressured_target_rate": float(phase6_baseline["pressured_target_rate"]),
+            "steered_pressured_target_rate": float(
+                phase6_candidate["metrics"]["pressured_target_rate"]
+            ),
+            "baseline_control_target_rate": float(phase6_baseline["control_target_rate"]),
+            "steered_control_target_rate": float(
+                phase6_candidate["metrics"]["control_target_rate"]
+            ),
         },
         "figures": {name: str(path) for name, path in figures.items()},
     }

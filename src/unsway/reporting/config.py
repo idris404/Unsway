@@ -18,6 +18,7 @@ class Phase5Inputs:
     phase3_feature_report: Path
     phase4_validation_report: Path
     phase4_test_report: Path
+    phase6e_test_report: Path
 
 
 @dataclass(frozen=True)
@@ -68,6 +69,7 @@ def load_phase5_config(path: str | Path) -> Phase5Config:
             phase3_feature_report=Path(str(inputs["phase3_feature_report"])),
             phase4_validation_report=Path(str(inputs["phase4_validation_report"])),
             phase4_test_report=Path(str(inputs["phase4_test_report"])),
+            phase6e_test_report=Path(str(inputs["phase6e_test_report"])),
         ),
         output=Phase5Output(
             figure_dir=Path(str(output["figure_dir"])),
